@@ -5,6 +5,7 @@ import { Harvest } from "./harvest.interface";
 export interface Farmer {
   id: string;
   document: string;
+  documentType: string;
   name: string;
   farms: Farm[];
   harvests: Harvest[];
@@ -15,4 +16,11 @@ export interface FarmerState {
   farmer: Farmer[];
   loading: boolean;
   error: string | null;
+  isError: boolean;
+}
+
+export interface FarmerCreate {
+  document: string;
+  documentType: string;
+  name: string;
 }

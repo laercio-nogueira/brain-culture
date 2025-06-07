@@ -3,3 +3,9 @@ export interface Harvest {
   name: string;
   year: number;
 }
+
+export interface HarvestCreate {
+  name: string;
+  year: number;
+  farmId: string;
+}

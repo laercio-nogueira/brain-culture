@@ -1,40 +1,59 @@
-import React, { useState } from 'react';
-import { Container, Title, Label, Input, Button } from '../../components';
+import React, { useState } from "react";
+import { useGetFarmsQuery } from "../../store/states/farm/farmApi";
+import { useAddHarvestMutation } from "../../store/states/harvest/harvestApi";
+import { ErrorI } from "../../interfaces/error.interface";
+import { FieldTypesList } from "../../interfaces/fields.interface";
+import RegisterHarvestTemplate from "../../templates/registerTemplates/RegisterHarvestTemplate";
 
 const HarvestForm: React.FC = () => {
-  const [harvestName, setHarvestName] = useState('');
+  const { data: farmers } = useGetFarmsQuery();
+  const [addHarvest, { isLoading, error, isError, reset }] =
+    useAddHarvestMutation<ErrorI>();
+  const [fieldErrors, setFieldErrors] = useState<any>({});
+  const [formData, setFormData] = useState({
+    name: "",
+    year: 0,
+    farmId: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const isErrorFields = () => {
+    setFieldErrors({
+      name: !formData.name ? FieldTypesList.REQUIRED : null,
+      year: !formData.year ? FieldTypesList.REQUIRED : null,
+    });
 
-    if (!harvestName.trim()) {
-      alert('Por favor, informe o nome da safra.');
-      return;
-    }
+    const { name, year } = formData;
 
-    const formData = {
-      harvestName,
-    };
-
-    console.log('📤 Submitting Harvest:', formData);
-    alert('Safra cadastrada com sucesso!');
+    return !name || !year;
   };
 
-  return (
-    <Container>
-      <Title>Cadastro de Safra</Title>
-      <form onSubmit={handleSubmit}>
-        <Label>Nome da Safra</Label>
-        <Input
-          type="text"
-          placeholder="Ex: Safra 2025"
-          value={harvestName}
-          onChange={(e) => setHarvestName(e.target.value)}
-        />
+  const handleSubmit = async () => {
+    if (isErrorFields()) return;
 
-        <Button type="submit">Cadastrar Safra</Button>
-      </form>
-    </Container>
+    const result = await addHarvest(formData);
+
+    if (!result.error) {
+      await alert(FieldTypesList.REGISTER_HARVEST_SUCCESS);
+      location.replace("/harvest");
+    }
+  };
+
+  const maxValueYear = (value: number) =>
+    Math.min(Number(value), new Date().getFullYear());
+
+  return (
+    <RegisterHarvestTemplate
+      handleSubmit={handleSubmit}
+      formData={formData}
+      setFormData={setFormData}
+      fieldErrors={fieldErrors}
+      error={error}
+      isLoading={isLoading}
+      reset={reset}
+      maxValueYear={maxValueYear}
+      farmers={farmers}
+      isError={isError}
+    />
   );
 };
 

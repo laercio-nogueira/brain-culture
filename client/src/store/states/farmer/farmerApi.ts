@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Farmer } from "../../interfaces/farmer.interface";
+import { Farmer, FarmerCreate } from "../../interfaces/farmer.interface";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -12,9 +12,9 @@ export const FarmerApi = createApi({
       query: () => "",
       providesTags: ["Farmer"],
     }),
-    addFarmer: builder.mutation<Farmer, Omit<Farmer, "id">>({
+    addFarmer: builder.mutation<Farmer, FarmerCreate>({
       query: (farmer) => ({
-        url: "/producers",
+        url: "/",
         method: "POST",
         body: farmer,
       }),
@@ -26,7 +26,6 @@ export const FarmerApi = createApi({
         method: "PUT",
         body: farmer,
       }),
-      invalidatesTags: ["Farmer"],
     }),
     deleteFarmer: builder.mutation<void, string>({
       query: (id) => ({

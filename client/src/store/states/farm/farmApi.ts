@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Farm } from "../../interfaces/farm.interface";
+import { Farm, FarmCreate } from "../../interfaces/farm.interface";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -16,10 +16,15 @@ export const FarmApi = createApi({
       query: (producerId) => `/producers/${producerId}/farms`,
       providesTags: ["Farm"],
     }),
-    addFarm: builder.mutation<
-      Farm,
-      { producerId: string; farm: Omit<Farm, "id"> }
-    >({
+    addFarm: builder.mutation<Farm, FarmCreate>({
+      query: (farm) => ({
+        url: `/`,
+        method: "POST",
+        body: farm,
+      }),
+      invalidatesTags: ["Farm"],
+    }),
+    updateFarm: builder.mutation<Farm, { producerId: string; farm: Farm }>({
       query: ({ producerId, farm }) => ({
         url: `/producers/${producerId}/farms`,
         method: "POST",

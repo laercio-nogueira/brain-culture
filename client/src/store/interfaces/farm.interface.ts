@@ -10,3 +10,13 @@ export interface FarmState {
   loading: boolean;
   error: string | null;
 }
+
+export interface FarmCreate {
+  name: string;
+  city: string;
+  state: string;
+  totalArea: number | undefined;
+  cultivatedArea: number | undefined;
+  vegetatedArea: number | undefined;
+  farmerId?: string;
+}

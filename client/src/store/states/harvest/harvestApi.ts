@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Harvest } from "../../interfaces/harvest.interface";
+import { Harvest, HarvestCreate } from "../../interfaces/harvest.interface";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -12,6 +12,22 @@ export const HarvestApi = createApi({
       query: () => "",
       providesTags: ["Harvest"],
     }),
+    addHarvest: builder.mutation<Harvest, HarvestCreate>({
+      query: (harvest) => ({
+        url: "/",
+        method: "POST",
+        body: harvest,
+      }),
+      invalidatesTags: ["Harvest"],
+    }),
+    updateHarvest: builder.mutation<Harvest, Harvest>({
+      query: (harvest) => ({
+        url: `/${harvest.id}`,
+        method: "PUT",
+        body: harvest,
+      }),
+      invalidatesTags: ["Harvest"],
+    }),
     deleteHarvest: builder.mutation<void, string>({
       query: (id) => ({
         url: `/${id}`,
@@ -22,4 +38,9 @@ export const HarvestApi = createApi({
   }),
 });
 
-export const { useGetHarvestsQuery, useDeleteHarvestMutation } = HarvestApi;
+export const {
+  useGetHarvestsQuery,
+  useDeleteHarvestMutation,
+  useAddHarvestMutation,
+  useUpdateHarvestMutation,
+} = HarvestApi;

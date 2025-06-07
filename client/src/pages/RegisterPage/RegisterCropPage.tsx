@@ -1,69 +1,46 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
-import { Container, Title, Label, Input, Button, Select } from '../../components';
+import React, { useState } from "react";
 import { useAddCropMutation } from "../../store/states/crop/cropApi";
-import { useGetHarvestsQuery } from '../../store/states/harvest/harvestApi';
+import { useGetHarvestsQuery } from "../../store/states/harvest/harvestApi";
+import RegisterCropTemplate from "../../templates/registerTemplates/RegisterCropTemplate";
+import { FieldTypesList } from "../../interfaces/fields.interface";
 
-const CultureForm: React.FC = () => {
-  const navigate = useNavigate();
+const CultureFormPage: React.FC = () => {
   const [addCrop] = useAddCropMutation();
   const { data: harvests } = useGetHarvestsQuery();
-  const [formData, setformData] = useState<{
-    name: string;
-    harvestId: string;
-  }>({
-    name: '',
-    harvestId: '',
+  const [fieldErrors, setFieldErrors] = useState<any>({});
+  const [formData, setformData] = useState<any>({
+    name: "",
+    harvestId: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const isErrorFields = () => {
+    setFieldErrors({
+      name: !formData.name ? FieldTypesList.REQUIRED : null,
+    });
 
-    if (!formData.name.trim() && !formData.harvestId) {
-      alert('Por favor, preencha todos os campos.');
-      return;
-    }
+    return !formData.name;
+  };
 
-    await addCrop(formData);
-    const confirm: any = alert('Cultura cadastrada com sucesso!');
-    if (confirm) {
-      navigate('/crop');
+  const handleSubmit = async () => {
+    if (isErrorFields()) return;
+
+    const result = await addCrop(formData);
+
+    if (!result.error) {
+      await alert(FieldTypesList.REGISTER_CROP_SUCCESS);
+      location.replace("/crop");
     }
   };
 
   return (
-    <Container>
-      <Title>Cadastro de Cultura Plantada</Title>
-      <form onSubmit={handleSubmit}>
-        <Label>Tipo da Cultura</Label>
-        <Input
-          type="text"
-          placeholder="Ex: Soja"
-          value={formData.name}
-          onChange={(e) => setformData((prev) => ({
-            ...prev,
-            name: e.target.value
-          }))}
-        />
-
-        <Label>Safra</Label>
-        <Select
-          value={formData.harvestId}
-          onChange={(e) => setformData((prev) => ({
-            ...prev,
-            harvestId: e.target.value
-          }))}
-        >
-          <option value="">Selecione a safra</option>
-          {harvests?.map(({ name, year, id }: { name: string; year: number; id: string}) => (
-            <option key={id} value={id}>{`${name} ${year}`}</option>
-          ))}
-        </Select>
-
-        <Button type="submit">Cadastrar Cultura</Button>
-      </form>
-    </Container>
+    <RegisterCropTemplate
+      handleSubmit={handleSubmit}
+      formData={formData}
+      setformData={setformData}
+      harvests={harvests}
+      fieldErrors={fieldErrors}
+    />
   );
 };
 
-export default CultureForm;
+export default CultureFormPage;
