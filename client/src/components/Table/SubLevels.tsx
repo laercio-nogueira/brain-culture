@@ -87,13 +87,13 @@ const SubLevels: React.FC<SubLevelsProps> = ({
           </Td>
 
           <Td>
-            {hasSubLevels && (
+            {hasSubLevels && item[levels.subLevels.label]?.length ? (
               <ButtonMore
                 onClick={() => toggleExpand(levels.label, item.id)}
                 backgroundColor={itemExpanded ? "#e74c3c" : "#2ecc71"}
                 text={itemExpanded ? "esconder" : "mostrar"}
               />
-            )}
+            ) : null}
           </Td>
         </tr>
 
