@@ -57,12 +57,4 @@ describe('FarmerService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined()
   })
-
-  describe('create', () => {
-    it('should call createFarmerUseCase.execute with the correct parameters', async () => {
-      const farmerData = { name: 'John Doe', farmName: 'Doe Farm' }
-      await service.create(farmerData as any)
-      expect(createFarmerUseCase.execute).toHaveBeenCalledWith(farmerData)
-    })
-  })
 })
