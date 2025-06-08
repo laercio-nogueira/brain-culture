@@ -5,6 +5,7 @@ export class UpdateCropDto {
   @IsNotEmpty()
   name: string
 
+  @IsUUID(4)
   @IsOptional()
   @Transform(({ value }) => (!!value ? value : null))
   harvestId?: string | null

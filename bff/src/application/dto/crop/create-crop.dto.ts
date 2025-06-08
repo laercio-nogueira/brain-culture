@@ -1,12 +1,14 @@
-import { IsNotEmpty, IsUUID } from 'class-validator'
+import { Transform } from 'class-transformer'
+import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator'
 
 export class CreateCropDto {
   @IsNotEmpty()
   name: string
 
-  @IsNotEmpty()
   @IsUUID(4)
-  harvestId: string
+  @IsOptional()
+  @Transform(({ value }) => (!!value ? value : null))
+  harvestId?: string | null
 
   createdAt?: Date
 }

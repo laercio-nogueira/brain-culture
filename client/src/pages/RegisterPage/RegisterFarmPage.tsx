@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetFarmersQuery } from "@store/states/farmer/farmerApi";
-import { useAddFarmMutation } from "@store/states/farm/farmApi";
+import {
+  useAddFarmMutation,
+  useGetFarmQuery,
+  useUpdateFarmMutation,
+} from "@store/states/farm/farmApi";
 import { ErrorI } from "@interfaces/error.interface";
 import RegisterFarmTemplate from "@templates/registerTemplates/RegisterFarmTemplate";
 import { FieldTypesList } from "@interfaces/fields.interface";
+import { useParams } from "react-router";
 
 const FarmForm: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [addFarm, { isLoading, error, isError, reset }] =
     useAddFarmMutation<ErrorI>();
-
+  const [updateFarm] = useUpdateFarmMutation();
   const { data: farmers } = useGetFarmersQuery();
   const [fieldErrors, setFieldErrors] = useState<any>({});
-  const [formData, setFormData] = useState({
+  const { data: farm } = useGetFarmQuery(id!, {
+    skip: !id,
+  });
+  const [formData, setFormData] = useState<any>({
     name: "",
     city: "",
     state: "",
@@ -21,10 +30,14 @@ const FarmForm: React.FC = () => {
     farmerId: "",
   });
 
+  useEffect(() => {
+    if (farm) setFormData(farm);
+  }, [farm]);
+
   const validateTotalArea = () => {
     const { totalArea, cultivatedArea, vegetatedArea } = formData;
     if (!totalArea) return FieldTypesList.REQUIRED;
-    console.log(totalArea >= cultivatedArea + vegetatedArea);
+
     return totalArea > cultivatedArea + vegetatedArea
       ? FieldTypesList.EXTENDED_TOTAL_AREA
       : null;
@@ -59,7 +72,7 @@ const FarmForm: React.FC = () => {
   const handleSubmit = async () => {
     if (isErrorFields()) return;
 
-    const result = await addFarm(formData);
+    const result = id ? await updateFarm(formData) : await addFarm(formData);
 
     if (!result.error) {
       await alert(FieldTypesList.REGISTER_FARM_SUCCESS);

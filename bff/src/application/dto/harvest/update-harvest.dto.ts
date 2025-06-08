@@ -1,7 +1,10 @@
+import { Transform } from 'class-transformer'
 import {
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
+  IsUUID,
   Max,
   MaxLength,
   Min,
@@ -19,4 +22,9 @@ export class UpdateHarvestDto {
   @IsNumber()
   @IsNotEmpty()
   year: number
+
+  @IsUUID(4)
+  @IsOptional()
+  @Transform(({ value }) => (!!value ? value : null))
+  farmId?: string
 }

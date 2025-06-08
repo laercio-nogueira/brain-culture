@@ -12,7 +12,7 @@ export const cropApi = createApi({
       query: () => "",
       providesTags: ["Crop"],
     }),
-    getCrop: builder.query<Crop[], string>({
+    getCrop: builder.query<Crop, string>({
       query: (cropId) => `/${cropId}`,
       providesTags: ["Crop"],
     }),

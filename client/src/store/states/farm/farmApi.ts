@@ -13,7 +13,7 @@ export const FarmApi = createApi({
       providesTags: ["Farm"],
     }),
     getFarm: builder.query<Farm, string>({
-      query: (producerId) => `/producers/${producerId}/farms`,
+      query: (id: string) => `/${id}`,
       providesTags: ["Farm"],
     }),
     addFarm: builder.mutation<Farm, FarmCreate>({
@@ -24,10 +24,10 @@ export const FarmApi = createApi({
       }),
       invalidatesTags: ["Farm"],
     }),
-    updateFarm: builder.mutation<Farm, { producerId: string; farm: Farm }>({
-      query: ({ producerId, farm }) => ({
-        url: `/producers/${producerId}/farms`,
-        method: "POST",
+    updateFarm: builder.mutation<Farm, Farm>({
+      query: (farm) => ({
+        url: `/${farm.id}`,
+        method: "PUT",
         body: farm,
       }),
       invalidatesTags: ["Farm"],
@@ -47,4 +47,5 @@ export const {
   useGetFarmQuery,
   useAddFarmMutation,
   useDeleteFarmMutation,
+  useUpdateFarmMutation,
 } = FarmApi;

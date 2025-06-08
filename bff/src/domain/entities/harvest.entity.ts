@@ -3,4 +3,5 @@ export type HarvestProps = {
   name: string
   year: number
   creatAt?: Date
+  farmId?: string
 }

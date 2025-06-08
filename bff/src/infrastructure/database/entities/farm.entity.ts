@@ -34,6 +34,11 @@ export class FarmEntity {
   @ManyToOne(() => FarmerEntity, farmer => farmer.farms)
   farmer: FarmerEntity
 
+  @Column({
+    nullable: true,
+  })
+  farmerId: string
+
   @OneToMany(() => HarvestEntity, harvest => harvest.farm)
   harvests: HarvestEntity[]
 

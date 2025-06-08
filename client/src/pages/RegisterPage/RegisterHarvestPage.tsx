@@ -1,20 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { useGetFarmsQuery } from "@store/states/farm/farmApi";
-import { useAddHarvestMutation } from "@store/states/harvest/harvestApi";
+import {
+  useAddHarvestMutation,
+  useGetHarvestQuery,
+  useUpdateHarvestMutation,
+} from "@store/states/harvest/harvestApi";
 import { ErrorI } from "@interfaces/error.interface";
 import { FieldTypesList } from "@interfaces/fields.interface";
 import RegisterHarvestTemplate from "@templates/registerTemplates/RegisterHarvestTemplate";
+import { Harvest } from "@store/interfaces/harvest.interface";
 
 const HarvestForm: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const { data: farmers } = useGetFarmsQuery();
   const [addHarvest, { isLoading, error, isError, reset }] =
     useAddHarvestMutation<ErrorI>();
+  const [updateHarvest] = useUpdateHarvestMutation();
   const [fieldErrors, setFieldErrors] = useState<any>({});
-  const [formData, setFormData] = useState({
+  const { data: harvest } = useGetHarvestQuery(id!, {
+    skip: !id,
+  });
+  const [formData, setFormData] = useState<any>({
     name: "",
     year: 0,
     farmId: "",
   });
+
+  useEffect(() => {
+    if (harvest) setFormData(harvest);
+  }, [harvest]);
 
   const isErrorFields = () => {
     setFieldErrors({
@@ -30,7 +45,9 @@ const HarvestForm: React.FC = () => {
   const handleSubmit = async () => {
     if (isErrorFields()) return;
 
-    const result = await addHarvest(formData);
+    const result = id
+      ? await updateHarvest(formData)
+      : await addHarvest(formData);
 
     if (!result.error) {
       await alert(FieldTypesList.REGISTER_HARVEST_SUCCESS);

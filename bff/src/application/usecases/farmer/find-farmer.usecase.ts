@@ -11,7 +11,6 @@ export class FindFarmerUseCase {
       if (id) {
         return await this.farmerRepository.findOne({
           where: { id },
-          relations: FarmerRelations,
         })
       }
 

@@ -18,13 +18,13 @@ const CultureFormPage: React.FC = () => {
   const { data: crop } = useGetCropQuery(id!, {
     skip: !id,
   });
-  const [formData, setformData] = useState<any>({
+  const [formData, setFormData] = useState<any>({
     name: "",
     harvestId: "",
   });
 
   useEffect(() => {
-    if (crop) setformData(crop);
+    if (crop) setFormData(crop);
   }, [crop]);
 
   const isErrorFields = () => {
@@ -50,7 +50,7 @@ const CultureFormPage: React.FC = () => {
     <RegisterCropTemplate
       handleSubmit={handleSubmit}
       formData={formData}
-      setformData={setformData}
+      setFormData={setFormData}
       harvests={harvests}
       fieldErrors={fieldErrors}
     />

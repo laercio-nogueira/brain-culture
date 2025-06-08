@@ -5,7 +5,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { FarmerEntity } from './farmer.entity'
 import { FarmEntity } from './farm.entity'
 import { CropEntity } from './crop.entity'
 
@@ -22,6 +21,9 @@ export class HarvestEntity {
 
   @ManyToOne(() => FarmEntity, farm => farm.harvests)
   farm: FarmEntity
+
+  @Column({ nullable: true })
+  farmId?: string | null
 
   @OneToMany(() => CropEntity, crop => crop.harvest)
   crops?: CropEntity[]

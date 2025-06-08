@@ -10,7 +10,7 @@ import {
 const CultureFormTemplate = ({
   handleSubmit,
   formData,
-  setformData,
+  setFormData,
   harvests,
   fieldErrors,
 }: any) => {
@@ -22,7 +22,7 @@ const CultureFormTemplate = ({
         type="text"
         placeholder="Ex: Soja"
         value={formData.name}
-        onChange={(value: string) => setformData({ ...formData, name: value })}
+        onChange={(value: string) => setFormData({ ...formData, name: value })}
         error={fieldErrors.name}
       />
 
@@ -30,7 +30,7 @@ const CultureFormTemplate = ({
       <Select
         value={formData.harvestId}
         onChange={(e) =>
-          setformData((prev: any) => ({
+          setFormData((prev: any) => ({
             ...prev,
             harvestId: e.target.value,
           }))
