@@ -1,6 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useParams,
+} from "react-router";
 import Navbar from "./components/Navbar";
-import RegisterFarmerPage from './pages/RegisterPage/RegisterFarmerPage'
+import RegisterFarmerPage from "./pages/RegisterPage/RegisterFarmerPage";
 import RegisterFarmPage from "./pages/RegisterPage/RegisterFarmPage";
 import RegisterHarvestPage from "./pages/RegisterPage/RegisterHarvestPage";
 import RegisterCropPage from "./pages/RegisterPage/RegisterCropPage";
@@ -9,6 +15,7 @@ import ListFarmerPage from "./pages/ListPage/ListFarmerPage";
 import ListFarmPage from "./pages/ListPage/ListFarmPage";
 import ListHarvestPage from "./pages/ListPage/ListHarvestPage";
 import ListCropPage from "./pages/ListPage/ListCropPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -28,9 +35,10 @@ function App() {
         <Route path="/harvest/edit/:id" element={<RegisterHarvestPage />} />
         <Route path="/crop/edit/:id" element={<RegisterCropPage />} />
         <Route path="/" element={<Dashboard />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
