@@ -12,13 +12,14 @@ import { CropUpdate } from "@interfaces/crop.interface";
 
 const CultureFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [addCrop] = useAddCropMutation();
-  const [updateCrop] = useUpdateCropMutation();
+
+  const [addCrop, addStatus] = useAddCropMutation();
+  const [updateCrop, updateStatus] = useUpdateCropMutation();
+
+  const { data: crop } = useGetCropQuery(id!, { skip: !id });
   const { data: harvests } = useGetHarvestsQuery();
+
   const [fieldErrors, setFieldErrors] = useState<any>({});
-  const { data: crop } = useGetCropQuery(id!, {
-    skip: !id,
-  });
   const [formData, setFormData] = useState<CropUpdate>({
     name: "",
     harvestId: "",
@@ -54,6 +55,10 @@ const CultureFormPage: React.FC = () => {
       setFormData={setFormData}
       harvests={harvests}
       fieldErrors={fieldErrors}
+      isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
+      error={id ? updateStatus.error : addStatus.error}
+      isError={id ? updateStatus.isError : addStatus.isError}
+      reset={id ? updateStatus.reset : addStatus.reset}
     />
   );
 };

@@ -13,14 +13,14 @@ import { HarvestUpdate } from "@interfaces/harvest.interface";
 
 const HarvestForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+
+  const [addHarvest, addStatus] = useAddHarvestMutation<ErrorI>();
+  const [updateHarvest, updateStatus] = useUpdateHarvestMutation<ErrorI>();
+
   const { data: farmers } = useGetFarmsQuery();
-  const [addHarvest, { isLoading, error, isError, reset }] =
-    useAddHarvestMutation<ErrorI>();
-  const [updateHarvest] = useUpdateHarvestMutation();
+  const { data: harvest } = useGetHarvestQuery(id!, { skip: !id });
+
   const [fieldErrors, setFieldErrors] = useState<any>({});
-  const { data: harvest } = useGetHarvestQuery(id!, {
-    skip: !id,
-  });
   const [formData, setFormData] = useState<HarvestUpdate>({
     name: "",
     year: 0,
@@ -64,12 +64,12 @@ const HarvestForm: React.FC = () => {
       formData={formData}
       setFormData={setFormData}
       fieldErrors={fieldErrors}
-      error={error}
-      isLoading={isLoading}
-      reset={reset}
       maxValueYear={maxValueYear}
       farmers={farmers}
-      isError={isError}
+      error={id ? updateStatus.error : addStatus.error}
+      isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
+      reset={id ? updateStatus.reset : addStatus.reset}
+      isError={id ? updateStatus.isError : addStatus.isError}
     />
   );
 };

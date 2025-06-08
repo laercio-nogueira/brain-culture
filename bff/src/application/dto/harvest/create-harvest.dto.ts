@@ -12,15 +12,15 @@ import {
 const year = () => new Date().getFullYear()
 
 export class CreateHarvestDto {
-  @MaxLength(14)
+  @MaxLength(40, { message: 'O nome deve ser menor que 40 caracteres' })
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Nome da Safra é necessario' })
   name: string
 
-  @Min(1980, { message: 'must be longer than 1980' })
-  @Max(year(), { message: `must be shorter or equal than ${year()}` })
+  @Min(1980, { message: 'Data de criação deve ser maior que 1980' })
+  @Max(year(), { message: `Data de criação deve ser menor ou igual ${year()}` })
   @IsNumber()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Ano da Safra é necessario' })
   year: number
 
   @IsUUID(4)

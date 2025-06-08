@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer'
 import {
   IsNotEmpty,
   IsNumber,
@@ -5,42 +6,62 @@ import {
   Max,
   MaxLength,
   Min,
+  IsUUID,
+  IsOptional,
+  MinLength,
 } from 'class-validator'
-import { isUUID } from 'class-validator'
 
 export class CreateFarmDto {
-  @MaxLength(100)
-  @IsString()
+  @MaxLength(1, {
+    message: 'O nome deve ser menor que 100 caracteres',
+  })
+  @IsString({
+    message: 'O nome deve ser uma string',
+  })
   @IsNotEmpty()
   name: string
 
-  @MaxLength(100)
-  @IsString()
-  @IsNotEmpty()
+  @MaxLength(1, {
+    message: 'A cidade deve tem menor que 100 caracteres',
+  })
+  @IsString({
+    message: 'A cidade deve ser uma string',
+  })
+  @IsNotEmpty({
+    message: 'A cidade é necessaria',
+  })
   city: string
 
-  @MaxLength(100)
+  @MinLength(2, {
+    message: 'O Estado deve ser uma sigla com 2 caracteres',
+  })
+  @MaxLength(2, {
+    message: 'O Estado deve ser uma sigla com 2 caracteres',
+  })
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O estado é necessario' })
   state: string
 
-  @Min(1, { message: 'must be longer than 1' })
-  @Max(9999999, { message: 'must be shorter than 9999999' })
+  @Min(1, { message: 'Area total deve ser maior que 1' })
+  @Max(9999999, { message: 'Area total deve ser menor que 9999999' })
   @IsNumber()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Area total é necessaria' })
   totalArea: number
 
-  @Min(1, { message: 'must be longer than 1' })
-  @Max(9999999, { message: 'must be shorter than 9999999' })
+  @Min(1, { message: 'Area cultivada deve ser maior que 1' })
+  @Max(9999999, { message: 'Area cultivada deve ser menor que 9999999' })
   @IsNumber()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Area cultivada é necessaria' })
   cultivatedArea: number
 
-  @Min(1, { message: 'must be longer than 1' })
-  @Max(9999999, { message: 'must be shorter than 9999999' })
+  @Min(1, { message: 'Area vegetada deve ser maior que 1' })
+  @Max(9999999, { message: 'Area vegetada deve ser menor que 9999999' })
   @IsNumber()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Area vegetada é necessaria' })
   vegetatedArea: number
 
-  farmerId?: string
+  @IsUUID(4)
+  @IsOptional()
+  @Transform(({ value }) => (!!value ? value : null))
+  farmerId?: string | null
 }

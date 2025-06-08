@@ -6,6 +6,7 @@ import {
   Button,
   Select,
 } from "@components/index";
+import Popup from "@components/Popup";
 
 const CultureFormTemplate = ({
   handleSubmit,
@@ -13,6 +14,10 @@ const CultureFormTemplate = ({
   setFormData,
   harvests,
   fieldErrors,
+  error,
+  isLoading,
+  isError,
+  reset,
 }: any) => {
   return (
     <Container>
@@ -42,7 +47,16 @@ const CultureFormTemplate = ({
         ))}
       </Select>
 
-      <Button onClick={handleSubmit}>Cadastrar Cultura</Button>
+      <Button onClick={handleSubmit} disabled={isLoading} type="submit">
+        Cadastrar Cultura
+      </Button>
+      {isError && (
+        <Popup
+          text={error?.data.message.join(", ")}
+          onClose={reset}
+          type="error"
+        />
+      )}
     </Container>
   );
 };

@@ -12,13 +12,13 @@ import { FarmerUpdate } from "@interfaces/farmer.interface";
 
 const FarmerFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+
+  const [addFarmer, addStatus] = useAddFarmerMutation<ErrorI>();
+  const [updateFarmer, updateStatus] = useUpdateFarmerMutation();
+
+  const { data: farmer } = useGetFarmerQuery(id!, { skip: !id });
+
   const [fieldErrors, setFieldErrors] = useState<any>({});
-  const [addFarmer, { isLoading, error, isError, reset }] =
-    useAddFarmerMutation<ErrorI>();
-  const [updateFarmer] = useUpdateFarmerMutation();
-  const { data: farmer } = useGetFarmerQuery(id!, {
-    skip: !id,
-  });
   const [formData, setFormData] = useState<FarmerUpdate>({
     document: "",
     documentType: "PF",
@@ -63,11 +63,11 @@ const FarmerFormPage: React.FC = () => {
       formData={formData}
       fieldErrors={fieldErrors}
       setFormData={setFormData}
-      error={error}
-      reset={reset}
-      isError={isError}
       handleSubmit={handleSubmit}
-      isLoading={isLoading}
+      error={id ? updateStatus.error : addStatus.error}
+      reset={id ? updateStatus.reset : addStatus.reset}
+      isError={id ? updateStatus.isError : addStatus.isError}
+      isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
     />
   );
 };

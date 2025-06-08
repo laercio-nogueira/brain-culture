@@ -13,7 +13,7 @@ export class FarmEntity {
   @PrimaryGeneratedColumn('uuid')
   id?: string
 
-  @Column({ nullable: false, type: 'varchar' })
+  @Column({ nullable: false })
   name: string
 
   @Column({ nullable: false })

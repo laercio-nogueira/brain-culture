@@ -13,14 +13,14 @@ import { FarmUpdate } from "@interfaces/farm.interface";
 
 const FarmForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [addFarm, { isLoading, error, isError, reset }] =
-    useAddFarmMutation<ErrorI>();
-  const [updateFarm] = useUpdateFarmMutation();
+
+  const [addFarm, addStatus] = useAddFarmMutation<ErrorI>();
+  const [updateFarm, updateStatus] = useUpdateFarmMutation();
+
   const { data: farmers } = useGetFarmersQuery();
+  const { data: farm } = useGetFarmQuery(id!, { skip: !id });
+
   const [fieldErrors, setFieldErrors] = useState<any>({});
-  const { data: farm } = useGetFarmQuery(id!, {
-    skip: !id,
-  });
   const [formData, setFormData] = useState<FarmUpdate>({
     name: "",
     city: "",
@@ -39,7 +39,7 @@ const FarmForm: React.FC = () => {
     const { totalArea, cultivatedArea, vegetatedArea } = formData;
     if (!totalArea) return FieldTypesList.REQUIRED;
 
-    return totalArea > cultivatedArea + vegetatedArea
+    return totalArea < cultivatedArea + vegetatedArea
       ? FieldTypesList.EXTENDED_TOTAL_AREA
       : null;
   };
@@ -89,10 +89,10 @@ const FarmForm: React.FC = () => {
       maxValueArea={maxValueArea}
       farmers={farmers}
       handleSubmit={handleSubmit}
-      isLoading={isLoading}
-      error={error}
-      isError={isError}
-      reset={reset}
+      isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
+      error={id ? updateStatus.error : addStatus.error}
+      isError={id ? updateStatus.isError : addStatus.isError}
+      reset={id ? updateStatus.reset : addStatus.reset}
     />
   );
 };
