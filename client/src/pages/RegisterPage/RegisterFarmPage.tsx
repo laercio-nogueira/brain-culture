@@ -76,7 +76,9 @@ const FarmForm: React.FC = () => {
     const result = id ? await updateFarm(formData) : await addFarm(formData);
 
     if (!result.error) {
-      await alert(FieldTypesList.REGISTER_FARM_SUCCESS);
+      await alert(
+        id ? FieldTypesList.UPDATE_SUCCESS : FieldTypesList.REGISTER_SUCCESS
+      );
       location.replace("/farm");
     }
   };
@@ -93,6 +95,7 @@ const FarmForm: React.FC = () => {
       error={id ? updateStatus.error : addStatus.error}
       isError={id ? updateStatus.isError : addStatus.isError}
       reset={id ? updateStatus.reset : addStatus.reset}
+      id={id}
     />
   );
 };

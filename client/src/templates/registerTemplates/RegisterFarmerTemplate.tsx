@@ -18,10 +18,11 @@ const FarmerFormTemplate = ({
   isError,
   handleSubmit,
   isLoading,
+  id,
 }: any) => {
   return (
     <Container>
-      <Title>Cadastro de Fazendeiro</Title>
+      <Title>{id ? "Atualização de Produtor" : "Cadastro de Produtor"}</Title>
       <Label>Nome do Produtor</Label>
       <Input
         type="text"

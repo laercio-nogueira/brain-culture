@@ -18,10 +18,13 @@ const CultureFormTemplate = ({
   isLoading,
   isError,
   reset,
+  id,
 }: any) => {
   return (
     <Container>
-      <Title>Cadastro de Cultura Plantada</Title>
+      <Title>
+        {id ? "Atualização Cultura Plantada" : "Cadastro de Cultura Plantada"}
+      </Title>
       <Label>Tipo da Cultura</Label>
       <Input
         type="text"

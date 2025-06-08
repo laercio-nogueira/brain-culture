@@ -53,13 +53,16 @@ const FarmerFormPage: React.FC = () => {
         });
 
     if (!result.error) {
-      await alert(FieldTypesList.REGISTER_FARMER_SUCCESS);
+      await alert(
+        id ? FieldTypesList.UPDATE_SUCCESS : FieldTypesList.REGISTER_SUCCESS
+      );
       location.replace("/farmer");
     }
   };
 
   return (
     <RegisterFarmTemplate
+      id={id}
       formData={formData}
       fieldErrors={fieldErrors}
       setFormData={setFormData}

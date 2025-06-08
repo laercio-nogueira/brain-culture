@@ -6,17 +6,24 @@ import Tbody from "./Tbody";
 import NoRegister from "./NoRegister";
 
 const Container = styled.div`
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: "Segoe UI", sans-serif;
+  margin-top: 5rem;
+`;
+
+const Box = styled.div`
   border-radius: 10px;
   font-family: "Segoe UI", sans-serif;
 `;
 
 const Table = styled.table`
-  width: 100%;
   border-collapse: collapse;
   background: #eee;
+  margin: 0 auto;
 `;
 
 const AddButton = styled.button`
@@ -53,7 +60,7 @@ interface CrudListPageProps {
 
 function CrudListPage({
   title = "",
-  width = "960px",
+  width = "1200px",
   columns,
   data,
   onEdit,
@@ -84,10 +91,12 @@ function CrudListPage({
   };
 
   return (
-    <Container style={{ maxWidth: width }}>
-      <Title>{title}</Title>
-      {onRegister && <AddButton onClick={onRegister}>+ Novo</AddButton>}
-      <Table>
+    <Container>
+      <Box style={{ maxWidth: width, minWidth: width }}>
+        <Title>{title}</Title>
+        {onRegister && <AddButton onClick={onRegister}>+ Novo</AddButton>}
+      </Box>
+      <Table style={{ maxWidth: width, minWidth: width }}>
         <Thead
           levels={levels}
           columns={columns}

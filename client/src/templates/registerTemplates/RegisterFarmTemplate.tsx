@@ -19,10 +19,11 @@ const FarmFormTemplate = ({
   error,
   isError,
   reset,
+  id,
 }: any) => {
   return (
     <Container>
-      <Title>Cadastro de Fazenda</Title>
+      <Title>{id ? "Atualização Fazenda" : "Cadastro de Fazenda"}</Title>
       <Label>Nome da Fazenda (Propriedade)</Label>
       <Input
         type="text"

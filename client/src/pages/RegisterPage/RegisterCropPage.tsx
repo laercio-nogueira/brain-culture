@@ -43,7 +43,9 @@ const CultureFormPage: React.FC = () => {
     const result = id ? await updateCrop(formData) : await addCrop(formData);
 
     if (!result.error) {
-      await alert(FieldTypesList.REGISTER_CROP_SUCCESS);
+      await alert(
+        id ? FieldTypesList.UPDATE_SUCCESS : FieldTypesList.REGISTER_SUCCESS
+      );
       location.replace("/crop");
     }
   };
@@ -59,6 +61,7 @@ const CultureFormPage: React.FC = () => {
       error={id ? updateStatus.error : addStatus.error}
       isError={id ? updateStatus.isError : addStatus.isError}
       reset={id ? updateStatus.reset : addStatus.reset}
+      id={id}
     />
   );
 };

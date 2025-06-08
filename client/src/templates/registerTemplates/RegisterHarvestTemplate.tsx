@@ -19,10 +19,11 @@ const HarvestFormTemplate = ({
   maxValueYear,
   farmers,
   isError,
+  id,
 }: any) => {
   return (
     <Container>
-      <Title>Cadastro de Safra</Title>
+      <Title>{id ? "Atualização de Safra" : "Cadastro de Safra"}</Title>
       <Label>Nome da Safra</Label>
       <Input
         type="text"

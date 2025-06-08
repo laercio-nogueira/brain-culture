@@ -50,7 +50,9 @@ const HarvestForm: React.FC = () => {
       : await addHarvest(formData);
 
     if (!result.error) {
-      await alert(FieldTypesList.REGISTER_HARVEST_SUCCESS);
+      await alert(
+        id ? FieldTypesList.UPDATE_SUCCESS : FieldTypesList.REGISTER_SUCCESS
+      );
       location.replace("/harvest");
     }
   };
@@ -70,6 +72,7 @@ const HarvestForm: React.FC = () => {
       isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
       reset={id ? updateStatus.reset : addStatus.reset}
       isError={id ? updateStatus.isError : addStatus.isError}
+      id={id}
     />
   );
 };
