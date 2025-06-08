@@ -8,11 +8,13 @@ import { FarmerController } from '@infrastructure/http/controllers/farmer.contro
 import { FarmController } from '@infrastructure/http/controllers/farm.controller'
 import { CropController } from '@infrastructure/http/controllers/crop.controller'
 import { HarvestController } from '@infrastructure/http/controllers/harvest.controller'
+import { DashboardController } from '@infrastructure/http/controllers/dashboard.controller'
 
 import { FarmerService } from '@domain/services/farmer.service'
 import { FarmService } from '@domain/services/farm.service'
 import { CropService } from '@domain/services/crop.service'
 import { HarvestService } from '@domain/services/harvest.service'
+import { DashboardService } from '@domain/services/dashboard.service'
 
 import { FarmerRepository } from '@infrastructure/database/repositories/farmer-repository'
 import { FarmRepository } from '@infrastructure/database/repositories/farm-repository'
@@ -40,6 +42,7 @@ import { FindHarvestUseCase } from '@application/usecases/harvest/find-harvest.u
 import { DeleteHarvestUseCase } from '@application/usecases/harvest/delete-harvest.usecase'
 import { UpdateHarvestUseCase } from '@application/usecases/harvest/update-harvest.usecase'
 import { HarvestRepository } from '@infrastructure/database/repositories/harvest-repository'
+import { DashboardUseCase } from '@application/usecases/dashboard/dashboard.usecase'
 
 @Module({
   imports: [
@@ -55,6 +58,7 @@ import { HarvestRepository } from '@infrastructure/database/repositories/harvest
     FarmController,
     CropController,
     HarvestController,
+    DashboardController,
   ],
   providers: [
     FarmerRepository,
@@ -68,6 +72,7 @@ import { HarvestRepository } from '@infrastructure/database/repositories/harvest
     FarmService,
     CropService,
     HarvestService,
+    DashboardService,
     UpdateFarmerUseCase,
     DeleteFarmerUseCase,
     CreateFarmUseCase,
@@ -82,6 +87,7 @@ import { HarvestRepository } from '@infrastructure/database/repositories/harvest
     FindHarvestUseCase,
     DeleteHarvestUseCase,
     UpdateHarvestUseCase,
+    DashboardUseCase,
   ],
 })
 export class AppModule implements OnModuleInit {

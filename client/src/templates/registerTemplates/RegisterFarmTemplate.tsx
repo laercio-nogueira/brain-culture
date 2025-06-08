@@ -109,11 +109,7 @@ const FarmFormTemplate = ({
         Cadastrar Fazenda
       </Button>
       {isError && (
-        <Popup
-          text={error?.data.message.join(", ")}
-          onClose={reset}
-          type="error"
-        />
+        <Popup text={error?.data.message} onClose={reset} type="error" />
       )}
     </Container>
   );

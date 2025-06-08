@@ -1,3 +1,4 @@
+import { ForeingKeyConstraintException } from '@application/exceptions/foreign-key-constraint.exception'
 import { FarmRepository } from '@infrastructure/database/repositories/farm-repository'
 import { Injectable } from '@nestjs/common'
 
@@ -12,7 +13,10 @@ export class DeleteFarmUseCase {
         message: 'Farm deleted successfully',
       }
     } catch (error) {
-      throw new Error('Error deleting farm')
+      throw new ForeingKeyConstraintException(
+        error,
+        'Fazenda não pode ser deletada pois possui safra(s) relacionadas(s)',
+      )
     }
   }
 }

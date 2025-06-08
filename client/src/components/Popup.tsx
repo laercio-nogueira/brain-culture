@@ -47,6 +47,11 @@ const colorRules: any = {
 };
 
 const Popup = ({ text, type, onClose }: any) => {
+  const formatMessage = (message: string | string[]) => {
+    console.log(message);
+    return Array.isArray(message) ? message.join(" ") : message;
+  };
+
   return (
     <PopupStyle
       className="popup"
@@ -55,7 +60,7 @@ const Popup = ({ text, type, onClose }: any) => {
       <button className="close" onClick={onClose}>
         x
       </button>
-      <p>{text}</p>
+      <p>{formatMessage(text)}</p>
     </PopupStyle>
   );
 };

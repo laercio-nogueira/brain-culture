@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Crop, CropCreate, CropUpdate } from "@interfaces/crop.interface";
 import { BASE_URL } from "@config/env.config";
 
-export const cropApi = createApi({
-  reducerPath: "cropApi",
+export const CropApi = createApi({
+  reducerPath: "CropApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1/crop` }),
   tagTypes: ["Crop"],
   endpoints: (builder) => ({
@@ -47,4 +47,4 @@ export const {
   useDeleteCropMutation,
   useAddCropMutation,
   useUpdateCropMutation,
-} = cropApi;
+} = CropApi;

@@ -1,3 +1,4 @@
+import { ForeingKeyConstraintException } from '@application/exceptions/foreign-key-constraint.exception'
 import { HarvestRepository } from '@infrastructure/database/repositories/harvest-repository'
 import { Injectable } from '@nestjs/common'
 
@@ -11,7 +12,10 @@ export class DeleteHarvestUseCase {
         message: 'Harvest deleted successfully',
       }
     } catch (error) {
-      throw error
+      throw new ForeingKeyConstraintException(
+        error,
+        'Safra não pode ser deletado pois possui Culturas(s) relacionada(s).',
+      )
     }
   }
 }
