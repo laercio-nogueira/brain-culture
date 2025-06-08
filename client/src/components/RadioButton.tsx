@@ -51,16 +51,6 @@ const RadioButton = ({ name, value, checked, onChange }: any) => {
       />
       {value}
     </RadioButtonLabel>
-    // <RadioButtonLabel>
-    //   <RadioButtonInput
-    //     type="radio"
-    //     name="documentType"
-    //     value="CNPJ"
-    //     checked={formData.documentType === "PJ"}
-    //     onChange={() => setFormData({ ...formData, documentType: "PJ" })}
-    //   />
-    //   CNPJ
-    // </RadioButtonLabel>
   );
 };
 

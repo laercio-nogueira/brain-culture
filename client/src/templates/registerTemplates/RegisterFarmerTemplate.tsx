@@ -6,8 +6,8 @@ import {
   Button,
   RadioButton,
   RadioGroup,
-} from "../../components";
-import Popup from "../../components/Popup";
+} from "@components/index";
+import Popup from "@components/Popup";
 
 const FarmerFormTemplate = ({
   formData,

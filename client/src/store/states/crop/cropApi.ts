@@ -12,8 +12,8 @@ export const cropApi = createApi({
       query: () => "",
       providesTags: ["Crop"],
     }),
-    getCrop: builder.query<Crop[], void>({
-      query: (cropId) => `/harvests/${cropId}/crops`,
+    getCrop: builder.query<Crop[], string>({
+      query: (cropId) => `/${cropId}`,
       providesTags: ["Crop"],
     }),
     addCrop: builder.mutation<Crop, CropCreate>({

@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
-import { Table } from "../../components";
+import { Table } from "@components/index";
 import {
   useGetFarmsQuery,
   useDeleteFarmMutation,
-} from "../../store/states/farm/farmApi";
+} from "@store/states/farm/farmApi";
 
 const FarmList = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const FarmList = () => {
 
   return (
     <Table
-      title="Fazendas"
+      title="Relatorio de Fazendas"
       width={1200}
       columns={[
         { label: "Nome", field: "name" },

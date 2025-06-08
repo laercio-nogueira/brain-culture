@@ -5,7 +5,7 @@ import {
   Input,
   Button,
   Select,
-} from "../../components";
+} from "@components/index";
 
 const CultureFormTemplate = ({
   handleSubmit,
@@ -17,36 +17,32 @@ const CultureFormTemplate = ({
   return (
     <Container>
       <Title>Cadastro de Cultura Plantada</Title>
-      <form onSubmit={handleSubmit}>
-        <Label>Tipo da Cultura</Label>
-        <Input
-          type="text"
-          placeholder="Ex: Soja"
-          value={formData.name}
-          onChange={(value: string) =>
-            setformData({ ...formData, name: value })
-          }
-          fieldErrors={fieldErrors.name}
-        />
+      <Label>Tipo da Cultura</Label>
+      <Input
+        type="text"
+        placeholder="Ex: Soja"
+        value={formData.name}
+        onChange={(value: string) => setformData({ ...formData, name: value })}
+        error={fieldErrors.name}
+      />
 
-        <Label>Safra</Label>
-        <Select
-          value={formData.harvestId}
-          onChange={(e) =>
-            setformData((prev: any) => ({
-              ...prev,
-              harvestId: e.target.value,
-            }))
-          }
-        >
-          <option value="">Selecione a safra</option>
-          {harvests?.map(({ name, year, id }: any) => (
-            <option key={id} value={id}>{`${name} ${year}`}</option>
-          ))}
-        </Select>
+      <Label>Safra</Label>
+      <Select
+        value={formData.harvestId}
+        onChange={(e) =>
+          setformData((prev: any) => ({
+            ...prev,
+            harvestId: e.target.value,
+          }))
+        }
+      >
+        <option value="">Selecione a safra</option>
+        {harvests?.map(({ name, year, id }: any) => (
+          <option key={id} value={id}>{`${name} ${year}`}</option>
+        ))}
+      </Select>
 
-        <Button type="submit">Cadastrar Cultura</Button>
-      </form>
+      <Button onClick={handleSubmit}>Cadastrar Cultura</Button>
     </Container>
   );
 };

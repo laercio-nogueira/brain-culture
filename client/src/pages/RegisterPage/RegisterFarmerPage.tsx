@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useAddFarmerMutation } from "../../store/states/farmer/farmerApi";
-import { ErrorI } from "../../interfaces/error.interface";
-import RegisterFarmTemplate from "../../templates/registerTemplates/RegisterFarmerTemplate";
-import { FieldTypesList } from "../../interfaces/fields.interface";
+import { useAddFarmerMutation } from "@store/states/farmer/farmerApi";
+import { ErrorI } from "@interfaces/error.interface";
+import RegisterFarmTemplate from "@templates/registerTemplates/RegisterFarmerTemplate";
+import { FieldTypesList } from "@interfaces/fields.interface";
 
 const FarmerFormPage: React.FC = () => {
   const [fieldErrors, setFieldErrors] = useState<any>({});
@@ -32,7 +32,7 @@ const FarmerFormPage: React.FC = () => {
 
     if (!result.error) {
       await alert(FieldTypesList.REGISTER_FARMER_SUCCESS);
-      location.replace("/farm");
+      location.replace("/farmer");
     }
   };
 

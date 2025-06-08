@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
-import { Table } from "../../components";
+import { Table } from "@components/index";
 import {
   useGetHarvestsQuery,
   useDeleteHarvestMutation,
-} from "../../store/states/harvest/harvestApi";
+} from "@store/states/harvest/harvestApi";
 
 const HarvestList = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const HarvestList = () => {
 
   return (
     <Table
-      title="Safras"
+      title="Relatorio de Safras"
       columns={[
         { label: "Nome", field: "name" },
         { label: "Ano", field: "year" },

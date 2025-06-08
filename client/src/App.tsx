@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Routes,
-  useParams,
-} from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import Navbar from "./components/Navbar";
 import RegisterFarmerPage from "./pages/RegisterPage/RegisterFarmerPage";
 import RegisterFarmPage from "./pages/RegisterPage/RegisterFarmPage";

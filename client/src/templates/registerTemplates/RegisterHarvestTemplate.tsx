@@ -5,8 +5,8 @@ import {
   Input,
   Button,
   Select,
-} from "../../components";
-import Popup from "../../components/Popup";
+} from "@components/index";
+import Popup from "@components/Popup";
 
 const HarvestFormTemplate = ({
   handleSubmit,

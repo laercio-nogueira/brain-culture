@@ -13,6 +13,6 @@ export const FieldTypesList = {
     "A soma da vegetacao e area cultivada deve ser menor que a area total",
   [FieldTypes.REGISTER_FARM_SUCCESS]: "Fazenda cadastrada com sucesso!",
   [FieldTypes.REGISTER_CROP_SUCCESS]: "Cultura cadastrada com sucesso!",
-  [FieldTypes.REGISTER_FARMER_SUCCESS]: "Proprietário cadastrado com sucesso!",
+  [FieldTypes.REGISTER_FARMER_SUCCESS]: "Produtor cadastrado com sucesso!",
   [FieldTypes.REGISTER_HARVEST_SUCCESS]: "Safra cadastrada com sucesso!",
 };

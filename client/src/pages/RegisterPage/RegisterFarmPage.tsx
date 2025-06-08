@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useGetFarmersQuery } from "../../store/states/farmer/farmerApi";
-import { useAddFarmMutation } from "../../store/states/farm/farmApi";
-import { ErrorI } from "../../interfaces/error.interface";
-import RegisterFarmTemplate from "../../templates/registerTemplates/RegisterFarmTemplate";
-import { FieldTypesList } from "../../interfaces/fields.interface";
+import { useGetFarmersQuery } from "@store/states/farmer/farmerApi";
+import { useAddFarmMutation } from "@store/states/farm/farmApi";
+import { ErrorI } from "@interfaces/error.interface";
+import RegisterFarmTemplate from "@templates/registerTemplates/RegisterFarmTemplate";
+import { FieldTypesList } from "@interfaces/fields.interface";
 
 const FarmForm: React.FC = () => {
   const [addFarm, { isLoading, error, isError, reset }] =
@@ -24,7 +24,8 @@ const FarmForm: React.FC = () => {
   const validateTotalArea = () => {
     const { totalArea, cultivatedArea, vegetatedArea } = formData;
     if (!totalArea) return FieldTypesList.REQUIRED;
-    return totalArea <= cultivatedArea + vegetatedArea
+    console.log(totalArea >= cultivatedArea + vegetatedArea);
+    return totalArea > cultivatedArea + vegetatedArea
       ? FieldTypesList.EXTENDED_TOTAL_AREA
       : null;
   };

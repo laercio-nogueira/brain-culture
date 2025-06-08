@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useGetFarmsQuery } from "../../store/states/farm/farmApi";
-import { useAddHarvestMutation } from "../../store/states/harvest/harvestApi";
-import { ErrorI } from "../../interfaces/error.interface";
-import { FieldTypesList } from "../../interfaces/fields.interface";
-import RegisterHarvestTemplate from "../../templates/registerTemplates/RegisterHarvestTemplate";
+import { useGetFarmsQuery } from "@store/states/farm/farmApi";
+import { useAddHarvestMutation } from "@store/states/harvest/harvestApi";
+import { ErrorI } from "@interfaces/error.interface";
+import { FieldTypesList } from "@interfaces/fields.interface";
+import RegisterHarvestTemplate from "@templates/registerTemplates/RegisterHarvestTemplate";
 
 const HarvestForm: React.FC = () => {
   const { data: farmers } = useGetFarmsQuery();

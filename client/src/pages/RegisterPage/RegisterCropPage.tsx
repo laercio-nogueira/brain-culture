@@ -1,17 +1,29 @@
-import React, { useState } from "react";
-import { useAddCropMutation } from "../../store/states/crop/cropApi";
-import { useGetHarvestsQuery } from "../../store/states/harvest/harvestApi";
-import RegisterCropTemplate from "../../templates/registerTemplates/RegisterCropTemplate";
-import { FieldTypesList } from "../../interfaces/fields.interface";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import {
+  useAddCropMutation,
+  useGetCropQuery,
+} from "@store/states/crop/cropApi";
+import { useGetHarvestsQuery } from "@store/states/harvest/harvestApi";
+import RegisterCropTemplate from "@templates/registerTemplates/RegisterCropTemplate";
+import { FieldTypesList } from "@interfaces/fields.interface";
 
 const CultureFormPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [addCrop] = useAddCropMutation();
   const { data: harvests } = useGetHarvestsQuery();
   const [fieldErrors, setFieldErrors] = useState<any>({});
+  const { data: crop } = useGetCropQuery(id!, {
+    skip: !id,
+  });
   const [formData, setformData] = useState<any>({
     name: "",
     harvestId: "",
   });
+
+  useEffect(() => {
+    if (crop) setformData(crop);
+  }, [crop]);
 
   const isErrorFields = () => {
     setFieldErrors({
