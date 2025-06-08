@@ -12,7 +12,7 @@ const HarvestList = () => {
 
   return (
     <Table
-      title="Relatorio de Safras"
+      title="Relatório de Safras"
       columns={[
         { label: "Nome", field: "name" },
         { label: "Ano", field: "year" },

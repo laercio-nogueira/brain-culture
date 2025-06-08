@@ -1,6 +1,7 @@
 import { HarvestProps } from '@domain/entities/harvest.entity'
 import { HarvestRepository } from '@infrastructure/database/repositories/harvest-repository'
 import { Injectable } from '@nestjs/common'
+import { HarvestRelations } from '@infrastructure/config/relations-config/harvest-relations-config'
 
 @Injectable()
 export class FindHarvestUseCase {
@@ -11,21 +12,15 @@ export class FindHarvestUseCase {
       if (id) {
         return await this.harvestRepository.findOne({
           where: { id },
-          relations: this.getRelations(),
+          relations: HarvestRelations,
         })
       }
 
       return await this.harvestRepository.find({
-        relations: this.getRelations(),
+        relations: HarvestRelations,
       })
     } catch (error) {
       throw error
-    }
-  }
-
-  getRelations(): any {
-    return {
-      crops: true,
     }
   }
 }

@@ -1,4 +1,3 @@
-import { FindCropDto } from '@application/dto/crop/find-crop.dto'
 import { CropFindProps } from '@domain/entities/crop.entity'
 import { CropRepository } from '@infrastructure/database/repositories/crop-repository'
 import { Injectable } from '@nestjs/common'

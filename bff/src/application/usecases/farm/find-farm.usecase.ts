@@ -1,6 +1,7 @@
 import { FarmProps } from '@domain/entities/farm.entity'
 import { FarmRepository } from '@infrastructure/database/repositories/farm-repository'
 import { Injectable } from '@nestjs/common'
+import { FarmRelations } from '@infrastructure/config/relations-config/farm-relations-config'
 
 @Injectable()
 export class FindFarmUseCase {
@@ -11,23 +12,15 @@ export class FindFarmUseCase {
       if (id) {
         return await this.farmRepository.findOne({
           where: { id },
-          relations: this.getRelations(),
+          relations: FarmRelations,
         })
       }
 
       return await this.farmRepository.find({
-        relations: this.getRelations(),
+        relations: FarmRelations,
       })
     } catch (error) {
       throw new Error('Error finding farm')
-    }
-  }
-
-  getRelations(): any {
-    return {
-      harvests: {
-        crops: true,
-      },
     }
   }
 }

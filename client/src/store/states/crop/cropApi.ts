@@ -24,6 +24,14 @@ export const cropApi = createApi({
       }),
       invalidatesTags: ["Crop"],
     }),
+    updateCrop: builder.mutation<Crop, Crop>({
+      query: (crop) => ({
+        url: `/${crop.id}`,
+        method: "PUT",
+        body: crop,
+      }),
+      invalidatesTags: ["Crop"],
+    }),
     deleteCrop: builder.mutation<void, string>({
       query: (cropId) => ({
         url: `/${cropId}`,
@@ -39,4 +47,5 @@ export const {
   useGetCropQuery,
   useDeleteCropMutation,
   useAddCropMutation,
+  useUpdateCropMutation,
 } = cropApi;

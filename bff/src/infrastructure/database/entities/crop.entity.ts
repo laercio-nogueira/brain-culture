@@ -15,7 +15,7 @@ export class CropEntity {
   @Column({ nullable: false, type: 'varchar' })
   name: string
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   harvestId: string
 
   @ManyToOne(() => HarvestEntity, harvest => harvest.crops)

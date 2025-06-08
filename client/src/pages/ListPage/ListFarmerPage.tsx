@@ -12,7 +12,7 @@ const FarmerList = () => {
 
   return (
     <Table
-      title="Relatorio de Produtores Rurais"
+      title="Relatório de Produtores Rurais"
       columns={[
         { label: "Nome", field: "name" },
         { label: "CPF/CNPJ", field: "document" },

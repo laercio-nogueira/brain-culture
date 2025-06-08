@@ -10,7 +10,11 @@ async function bootstrap() {
     type: VersioningType.URI,
     defaultVersion: '1',
   })
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  )
   app.enableCors()
   await app.listen(process.env.BACKEND_PORT ?? 3000)
 }

@@ -12,7 +12,7 @@ const FarmList = () => {
 
   return (
     <Table
-      title="Relatorio de Fazendas"
+      title="Relatório de Fazendas"
       width={1200}
       columns={[
         { label: "Nome", field: "name" },

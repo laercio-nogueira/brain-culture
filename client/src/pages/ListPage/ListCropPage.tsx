@@ -12,7 +12,7 @@ const CropList = () => {
 
   return (
     <Table
-      title="Relatorio de Culturas Plantadas"
+      title="Relatório de Culturas Plantadas"
       columns={[{ label: "Tipo", field: "name" }]}
       data={crop || []}
       onEdit={(id: string) => navigate(`/crop/edit/${id}`)}
