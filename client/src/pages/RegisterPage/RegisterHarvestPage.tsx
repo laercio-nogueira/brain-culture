@@ -9,7 +9,7 @@ import {
 import { ErrorI } from "@interfaces/error.interface";
 import { FieldTypesList } from "@interfaces/fields.interface";
 import RegisterHarvestTemplate from "@templates/registerTemplates/RegisterHarvestTemplate";
-import { Harvest } from "@store/interfaces/harvest.interface";
+import { HarvestUpdate } from "@interfaces/harvest.interface";
 
 const HarvestForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +21,7 @@ const HarvestForm: React.FC = () => {
   const { data: harvest } = useGetHarvestQuery(id!, {
     skip: !id,
   });
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<HarvestUpdate>({
     name: "",
     year: 0,
     farmId: "",

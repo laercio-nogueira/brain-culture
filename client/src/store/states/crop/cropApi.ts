@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Crop, CropCreate } from "../../interfaces/crop.interface";
-
-const BASE_URL = "http://localhost:3000";
+import { Crop, CropCreate, CropUpdate } from "@interfaces/crop.interface";
+import { BASE_URL } from "@config/env.config";
 
 export const cropApi = createApi({
   reducerPath: "cropApi",
@@ -24,7 +23,7 @@ export const cropApi = createApi({
       }),
       invalidatesTags: ["Crop"],
     }),
-    updateCrop: builder.mutation<Crop, Crop>({
+    updateCrop: builder.mutation<Crop, CropUpdate>({
       query: (crop) => ({
         url: `/${crop.id}`,
         method: "PUT",

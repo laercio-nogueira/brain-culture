@@ -8,6 +8,7 @@ import {
 import { useGetHarvestsQuery } from "@store/states/harvest/harvestApi";
 import RegisterCropTemplate from "@templates/registerTemplates/RegisterCropTemplate";
 import { FieldTypesList } from "@interfaces/fields.interface";
+import { CropUpdate } from "@interfaces/crop.interface";
 
 const CultureFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -18,7 +19,7 @@ const CultureFormPage: React.FC = () => {
   const { data: crop } = useGetCropQuery(id!, {
     skip: !id,
   });
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<CropUpdate>({
     name: "",
     harvestId: "",
   });

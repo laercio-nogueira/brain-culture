@@ -1,26 +1,24 @@
-import { Crop } from "./crop.interface";
 import { Farm } from "./farm.interface";
-import { Harvest } from "./harvest.interface";
 
 export interface Farmer {
   id: string;
+  name: string;
   document: string;
   documentType: string;
-  name: string;
   farms: Farm[];
-  harvests: Harvest[];
-  crops: Crop[];
+  createdAt: Date;
 }
 
 export interface FarmerState {
-  farmer: Farmer[];
-  loading: boolean;
-  error: string | null;
-  isError: boolean;
+  farmers: Farmer[];
 }
 
 export interface FarmerCreate {
   document: string;
   documentType: string;
   name: string;
+}
+
+export interface FarmerUpdate extends FarmerCreate {
+  id?: string;
 }

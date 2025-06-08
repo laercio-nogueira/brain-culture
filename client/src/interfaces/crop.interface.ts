@@ -1,16 +1,19 @@
 export interface Crop {
+  createdAt: Date;
+  harvestId: string;
   id: string;
   name: string;
-  harvests: string[];
 }
 
 export interface CropState {
   crops: Crop[];
-  loading: boolean;
-  error: string | null;
 }
 
 export interface CropCreate {
   name: string;
   harvestId: string;
+}
+
+export interface CropUpdate extends CropCreate {
+  id?: string;
 }

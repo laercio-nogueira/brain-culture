@@ -12,6 +12,7 @@ export default defineConfig({
       "@templates": path.resolve(__dirname, "./src/templates"),
       "@store": path.resolve(__dirname, "./src/store"),
       "@interfaces": path.resolve(__dirname, "./src/interfaces"),
+      "@config": path.resolve(__dirname, "./src/config"),
     },
   },
 });

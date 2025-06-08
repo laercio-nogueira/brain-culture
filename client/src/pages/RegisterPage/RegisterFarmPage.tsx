@@ -9,6 +9,7 @@ import { ErrorI } from "@interfaces/error.interface";
 import RegisterFarmTemplate from "@templates/registerTemplates/RegisterFarmTemplate";
 import { FieldTypesList } from "@interfaces/fields.interface";
 import { useParams } from "react-router";
+import { FarmUpdate } from "@interfaces/farm.interface";
 
 const FarmForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +21,7 @@ const FarmForm: React.FC = () => {
   const { data: farm } = useGetFarmQuery(id!, {
     skip: !id,
   });
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<FarmUpdate>({
     name: "",
     city: "",
     state: "",

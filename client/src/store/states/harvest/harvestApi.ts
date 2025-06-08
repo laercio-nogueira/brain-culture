@@ -3,9 +3,8 @@ import {
   Harvest,
   HarvestCreate,
   HarvestUpdate,
-} from "../../interfaces/harvest.interface";
-
-const BASE_URL = "http://localhost:3000";
+} from "@interfaces/harvest.interface";
+import { BASE_URL } from "@config/env.config";
 
 export const HarvestApi = createApi({
   reducerPath: "HarvestApi",

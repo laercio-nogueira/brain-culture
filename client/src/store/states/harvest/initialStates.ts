@@ -1,12 +1,7 @@
-import { AgricultureState } from "../../interfaces/farmer.interface";
+import { HarvestState } from "@interfaces/harvest.interface";
 
-const initialState: AgricultureState = {
-  producers: [],
-  farms: [],
+const initialState: HarvestState = {
   harvests: [],
-  crops: [],
-  loading: false,
-  error: null,
 };
 
 export default initialState;
