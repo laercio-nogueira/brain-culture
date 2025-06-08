@@ -11,7 +11,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['**/*.(t|s)s'],
   coverageDirectory: 'coverage',
-  coveragePathIgnorePatterns: ['/node_modules/'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
   moduleFileExtensions: ['js', 'ts', 'json'],
   moduleNameMapper: {
     '@infrastructure/(.*)': '<rootDir>/src/infrastructure/$1',

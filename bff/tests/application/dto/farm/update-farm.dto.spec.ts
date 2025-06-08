@@ -1,5 +1,7 @@
-describe('Tester', () => {
-  it('test', () => {
-    expect(1).toBe(1)
+import { UpdateFarmDto } from '@application/dto/farm/update-farm.dto'
+
+describe('UpdateFarmDto', () => {
+  it('should be defined', () => {
+    expect(new UpdateFarmDto()).toBeDefined()
   })
 })
