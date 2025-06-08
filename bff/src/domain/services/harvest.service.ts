@@ -20,11 +20,11 @@ export class HarvestService {
   }
 
   async findAll() {
-    return await this.findHarvestUseCase.execute()
+    return await this.findHarvestUseCase.findAll()
   }
 
   async findOne(id: string) {
-    return await this.findHarvestUseCase.execute(id)
+    return await this.findHarvestUseCase.findOne(id)
   }
 
   async update(id: string, harvest: UpdateHarvestDto) {

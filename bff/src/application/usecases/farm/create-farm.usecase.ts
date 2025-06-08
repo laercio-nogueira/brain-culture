@@ -14,33 +14,9 @@ export class CreateFarmUseCase {
 
   async execute(farm: CreateFarmDto): Promise<FarmProps> {
     try {
-      if (!farm.farmerId) {
-        return await this.farmRepository.save(farm)
-      }
-
-      const farmData = await this.getFarmerId(farm)
-      return await this.farmRepository.save(farmData)
+      return await this.farmRepository.save(farm)
     } catch (error) {
       throw error
     }
-  }
-
-  async getFarmerId(farm: CreateFarmDto): Promise<CreateFarmDto> {
-    if (!isUUID(farm.farmerId)) {
-      throw new NotFoundException(`Farmer with ID ${farm.farmerId} not found`)
-    }
-
-    const farmer = await this.farmerRepository.findOneOrFail({
-      where: { id: farm.farmerId },
-    })
-
-    if (!farmer) {
-      throw new NotFoundException(`Farmer with ID ${farm.farmerId} not found`)
-    }
-
-    return await this.farmRepository.create({
-      ...farm,
-      farmer,
-    })
   }
 }

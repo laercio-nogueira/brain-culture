@@ -10,7 +10,7 @@ import {
   IsOptional,
   MinLength,
 } from 'class-validator'
-import { isValidAreaTotal } from '../../decorators/area-total-validator.decorator'
+import { isValidAreaTotal } from '@application/decorators/area-total-validator.decorator'
 
 export class CreateFarmDto {
   @MaxLength(100, {

@@ -6,14 +6,18 @@ import { FarmerRelations } from '@infrastructure/config/relations-config/farmer-
 @Injectable()
 export class FindFarmerUseCase {
   constructor(private farmerRepository: FarmerRepository) {}
-  async execute(id?: string): Promise<FarmerProps | FarmerProps[]> {
+  async findOne(id?: string): Promise<FarmerProps> {
     try {
-      if (id) {
-        return await this.farmerRepository.findOne({
-          where: { id },
-        })
-      }
+      return await this.farmerRepository.findOne({
+        where: { id },
+      })
+    } catch (error) {
+      throw error
+    }
+  }
 
+  async findAll(): Promise<FarmerProps[]> {
+    try {
       return await this.farmerRepository.find({
         relations: FarmerRelations,
       })

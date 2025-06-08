@@ -9,7 +9,25 @@ export class FarmerRepository extends Repository<FarmerEntity> {
     super(FarmerEntity, farmer.createEntityManager())
   }
 
-  async findByDocument(document): Promise<FarmerProps> {
-    return this.findOne({ where: { document } })
+  async isDocumentExists(
+    document: string,
+    excludeId?: string,
+  ): Promise<boolean> {
+    const query = this.createQueryBuilder('farmer').where(
+      'farmer.document = :document',
+      { document },
+    )
+
+    if (excludeId) {
+      query.andWhere('farmer.id != :excludeId', { excludeId })
+    }
+
+    const count = await query.getCount()
+    return count > 0
+  }
+
+  async isIdExists(id: string): Promise<boolean> {
+    const count = await this.count({ where: { id } })
+    return count > 0
   }
 }

@@ -7,14 +7,18 @@ import { FarmRelations } from '@infrastructure/config/relations-config/farm-rela
 export class FindFarmUseCase {
   constructor(private farmRepository: FarmRepository) {}
 
-  async execute(id?: string): Promise<FarmProps | FarmProps[]> {
+  async findOne(id?: string): Promise<FarmProps> {
     try {
-      if (id) {
-        return await this.farmRepository.findOne({
-          where: { id },
-        })
-      }
+      return await this.farmRepository.findOne({
+        where: { id },
+      })
+    } catch (error) {
+      throw new Error('Error finding farm')
+    }
+  }
 
+  async findAll(): Promise<FarmProps | FarmProps[]> {
+    try {
       return await this.farmRepository.find({
         relations: FarmRelations,
       })

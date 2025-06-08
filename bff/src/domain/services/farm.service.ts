@@ -20,11 +20,11 @@ export class FarmService {
   }
 
   async findAll() {
-    return await this.findFarmUseCase.execute()
+    return await this.findFarmUseCase.findAll()
   }
 
   async findOne(id: string) {
-    return await this.findFarmUseCase.execute(id)
+    return await this.findFarmUseCase.findOne(id)
   }
 
   async update(id: string, farm: UpdateFarmDto) {
