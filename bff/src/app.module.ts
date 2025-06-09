@@ -1,7 +1,7 @@
 import { Module, OnModuleInit } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { EnvironmentConfigModule } from './infrastructure/config/environment-config/environment-config.module'
-import { TypeOrmConfigModule } from './infrastructure/config/typeorm/typeorm.module'
+import { TypeOrmConfigModule } from './infrastructure/config/typeorm-config/typeorm-config.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { FarmerController } from '@infrastructure/http/controllers/farmer.controller'
