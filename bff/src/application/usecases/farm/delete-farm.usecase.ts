@@ -10,7 +10,7 @@ export class DeleteFarmUseCase {
     try {
       await this.farmRepository.delete(id)
       return {
-        message: 'Farm deleted successfully',
+        message: 'Fazenda deletada com sucesso',
       }
     } catch (error) {
       throw new ForeingKeyConstraintException(

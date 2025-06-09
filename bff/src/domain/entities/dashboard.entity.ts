@@ -1,9 +1,9 @@
-interface FarmByState {
+export interface FarmByState {
   state: string
   count: string
 }
 
-interface CropByFarm {
+export interface CropByFarm {
   cropName: string
   farmCount: string
 }

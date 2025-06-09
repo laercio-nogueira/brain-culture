@@ -17,7 +17,7 @@ export class FindFarmUseCase {
     }
   }
 
-  async findAll(): Promise<FarmProps | FarmProps[]> {
+  async findAll(): Promise<FarmProps[]> {
     try {
       return await this.farmRepository.find({
         relations: FarmRelations,

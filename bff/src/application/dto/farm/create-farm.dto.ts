@@ -43,6 +43,7 @@ export class CreateFarmDto {
     message: 'O Estado deve ser uma string',
   })
   @IsNotEmpty({ message: 'O estado é necessario' })
+  @Transform(({ value }) => value?.toUpperCase())
   state: string
 
   @Min(1, { message: 'Area total deve ser maior que 1' })

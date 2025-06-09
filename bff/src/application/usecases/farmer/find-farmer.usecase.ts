@@ -2,6 +2,7 @@ import { FarmerProps } from '@domain/entities/farmer.entity'
 import { FarmerRepository } from '@infrastructure/database/repositories/farmer-repository'
 import { Injectable } from '@nestjs/common'
 import { FarmerRelations } from '@infrastructure/config/relations-config/farmer-relations-config'
+import { FindFarmerDto } from '@application/dto/farmer/find-farmer.dto'
 
 @Injectable()
 export class FindFarmerUseCase {
@@ -16,11 +17,13 @@ export class FindFarmerUseCase {
     }
   }
 
-  async findAll(): Promise<FarmerProps[]> {
+  async findAll(): Promise<FindFarmerDto[]> {
     try {
-      return await this.farmerRepository.find({
+      const result = await this.farmerRepository.find({
         relations: FarmerRelations,
       })
+
+      return FindFarmerDto.useMask(result)
     } catch (error) {
       throw error
     }
