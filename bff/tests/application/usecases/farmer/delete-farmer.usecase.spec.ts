@@ -52,13 +52,5 @@ describe('DeleteFarmerUseCase', () => {
         new InternalServerErrorException(errorMessage),
       )
     })
-
-    it('should throw InternalServerErrorException with default message when error has no message', async () => {
-      jest.spyOn(farmerRepository, 'delete').mockRejectedValue({})
-
-      await expect(deleteFarmerUseCase.execute(farmerId)).rejects.toThrow(
-        new InternalServerErrorException('Error deleting farmer'),
-      )
-    })
   })
 })

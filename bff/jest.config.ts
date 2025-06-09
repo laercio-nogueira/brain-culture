@@ -11,7 +11,14 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['**/*.(t|s)s'],
   coverageDirectory: 'coverage',
-  coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '/src/infrastructure/config/typeorm-config/',
+    '/src/app.module.ts',
+    '/main.ts',
+    '/jest.config.ts',
+  ],
   moduleFileExtensions: ['js', 'ts', 'json'],
   moduleNameMapper: {
     '@infrastructure/(.*)': '<rootDir>/src/infrastructure/$1',
@@ -19,4 +26,6 @@ module.exports = {
     '@domain/(.*)': '<rootDir>/src/domain/$1',
   },
   testEnvironment: 'node',
+  preset: 'ts-jest',
+  setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
 }
