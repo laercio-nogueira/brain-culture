@@ -1,3 +1,4 @@
+import React from "react";
 import {
   PieChart,
   Pie,
@@ -24,8 +25,10 @@ const GraphicPizza = ({ data, dataKey, nameKey, title }: any) => {
               fill="#38853b"
               label
             >
-              {data?.map((entry: any, index: any) => (
-                <Cell key={entry.state} fill={COLORS[index % COLORS.length]} />
+              {data?.map((entry: any, key: any) => (
+                <React.Fragment key={key}>
+                  <Cell key={entry.state} fill={COLORS[key % COLORS.length]} />
+                </React.Fragment>
               ))}
             </Pie>
             <Tooltip />
