@@ -4,6 +4,7 @@ const config: Config = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   collectCoverage: true,
+  silent: true,
   collectCoverageFrom: ["**/*.(t|s)s"],
   coverageDirectory: "coverage",
   coveragePathIgnorePatterns: [
