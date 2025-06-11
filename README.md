@@ -96,7 +96,7 @@ API RESTful para gerenciar o cadastro de produtores rurais.
 
 
 6. A aplicação estará disponível em:
-  - http://localhost:4173
+  - http://localhost:5173
 
 ---
 
