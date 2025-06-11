@@ -143,6 +143,3 @@ brain-culture/
 ├── README.md                   # Instructions do projeto
 ├── .gitignore
 ```
-
----
-## **4. Validações**
