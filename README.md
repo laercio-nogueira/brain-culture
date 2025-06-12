@@ -2,7 +2,7 @@
 
 API RESTful para gerenciar o cadastro de produtores rurais.
 
-## **Topicos**
+## **Tópicos**
 1. Tecnologias e Libs.
 2. Instalação
 3. Estrutura do Projeto.
