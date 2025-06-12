@@ -1,3 +1,4 @@
+import { IsCpfOrCnpj } from '@application/decorators/is-cpf-or-cnpj-validator.decorator'
 import { IsIn, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
 export class CreateFarmerDto {
@@ -13,6 +14,7 @@ export class CreateFarmerDto {
   @MaxLength(14, { message: 'Documento deve ter no maximo 14 caracteres' })
   @IsString({ message: 'Documento do Produtor deve ser uma string' })
   @IsNotEmpty({ message: 'Documento do Produtor, é necessario' })
+  @IsCpfOrCnpj('Documento do Produtor, deve ser CPF ou CNPJ valido')
   document: string
 
   @MaxLength(2)
