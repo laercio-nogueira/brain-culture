@@ -13,6 +13,7 @@ API RESTful para gerenciar o cadastro de produtores rurais.
 - **Node.js**
 - **NestJS**
 - **React.js**
+- **Docker e Docker Compose**
 
 ---
 
@@ -29,28 +30,32 @@ API RESTful para gerenciar o cadastro de produtores rurais.
    git clone https://github.com/laercio-nogueira/brain-culture.git
    cd ./brain-culture
    ```
-
 2. Instale as dependencias (Execute na raiz do projeto)
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Instale as dependencias (Execute na raiz do projeto)
    ```bash
    npm install
    ```
 
-3. Instale as dependencias do Frontend (Execute na raiz do projeto)
+4. Instale as dependencias do Frontend (Execute na raiz do projeto)
    ```bash
    cd ./client && npm install
     ```
 
-4. Instale as dependencias do Backend (Execute na raiz do projeto)
+5. Instale as dependencias do Backend (Execute na raiz do projeto)
     ```bash
     cd ./bff && npm install
     ```
 
-5. Inicie a aplicação em modo de Produção (Execute na raiz do projeto)
+6. Inicie a aplicação em modo de Produção (Execute na raiz do projeto)
     ```bash
       npm run prod
     ```
 
-6. A aplicação estará disponível em:
+7. A aplicação estará disponível em:
   - http://localhost:4173
 
 ---
@@ -65,20 +70,25 @@ API RESTful para gerenciar o cadastro de produtores rurais.
 
 2. Instale as dependencias (Execute na raiz do projeto)
    ```bash
+   docker-compose up -d
+   ```
+
+3. Instale as dependencias (Execute na raiz do projeto)
+   ```bash
    npm install
    ```
 
-3. Instale as dependencias do Frontend (Execute na raiz do projeto)
+4. Instale as dependencias do Frontend (Execute na raiz do projeto)
    ```bash
    cd ./client && npm install
     ```
 
-4. Instale as dependencias do Backend (Execute na raiz do projeto)
+5. Instale as dependencias do Backend (Execute na raiz do projeto)
     ```bash
     cd ./bff && npm install
     ```
 
-5. Start do Projeto
+6. Start do Projeto
 - (Modo Junto) - Inicie a aplicação em modo de Desenvolvimento (Execute na raiz do projeto)
     ```bash
       npm run dev
@@ -95,7 +105,7 @@ API RESTful para gerenciar o cadastro de produtores rurais.
     ```
 
 
-6. A aplicação estará disponível em:
+7. A aplicação estará disponível em:
   - http://localhost:5173
 
 ---
