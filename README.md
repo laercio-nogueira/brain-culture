@@ -113,43 +113,49 @@ API RESTful para gerenciar o cadastro de produtores rurais.
 ## **3. Estrutura do Projeto**
 ```ruby
 brain-culture/
-├── bff/                         # Backend For Frontend (Node.js)
-│   ├── dist/                    # Arquivos compilados do Frontend
-│   ├── node_modules/            
-│   ├── src/                     
-│   │   ├── controllers/         # Lógica dos controladores (entrada das requisições)
-│   │   ├── middleware/          # Middlewares de autenticação, logs, etc.
-│   │   ├── usecases/            # Casos de uso (regras de negócio)
-│   │   │   └── registerUseCase.js
-│   │   ├── views/               # Views (templates HTML) renderização de views
-│   │   ├── router.js            # Definições de rotas do BFF
-│   │   └── index.js             # Ponto de entrada do BFF
-│   ├── package.json             # Dependências e scripts do BFF
-│   └── package-lock.json
-│
-├── client/                     # Aplicação Frontend      
-│   ├── node_modules/           
-│   ├── src/                    
-│   │   ├── assets/             # SASS
-│   │   ├── components/         # Componentes reutilizáveis do React
-│   │   ├── pages/              # Páginas do aplicativo
-│   │   ├── templates/          # Templates              
-│   │   ├── App.tsx             # Componente raiz
-│   │   └── main.ts             # Ponto de entrada do app Vue
-│   ├── index.html              # HTML principal
-│   ├── jsconfig.json           # Configuração de paths para o TS
-│   ├── package.json            # Dependências e scripts do Frontend
-│   ├── package-lock.json
-│   ├── vite.config.ts          # Configuração do bundler Vite
-│   ├── .editorconfig
-│   ├── .gitattributes
-│   ├── .prettierrc.json
-│   └── eslint.config.js
-│
-├── node_modules/               
-├── .gitignore
-├── instructions.md             # Instruções para o desenvolvimento
-├── package.json                # Dependências e scripts do projeto
-├── README.md                   # Instructions do projeto
-├── .gitignore
+├── bff/                     # Backend (NestJS)
+│   ├── src/
+│   │   ├── application/     # Camada de aplicação (casos de uso, DTOs, contratos, etc.)
+│   │   │   ├── contracts/
+│   │   │   ├── decorators/
+│   │   │   ├── dto/
+│   │   │   ├── exceptions/
+│   │   │   └── usecases/
+│   │   ├── domain/          # Entidades e serviços de domínio
+│   │   │   ├── entities/
+│   │   │   └── services/
+│   │   ├── infrastructure/  # Infraestrutura (banco, http, etc.)
+│   │   │   ├── config/
+│   │   │   ├── database/
+│   │   │   └── http/
+│   │   │       ├── controllers/
+│   │   │       └── swagger/
+│   │   ├── app.module.ts
+│   │   └── main.ts
+│   ├── tests/               # Testes do backend
+│   ├── .env                 # Variáveis de ambiente
+│   ├── .eslintrc.js
+│   ├── .prettierrc
+│   ├── jest.config.ts
+│   ├── nest-cli.json
+│   ├── package.json
+│   ├── tsconfig.build.json
+│   └── tsconfig.json
+├── client/                  # Frontend (React + Vite)
+│   ├── src/
+│   │   ├── components/      # Componentes reutilizáveis
+│   │   ├── config/          # Configurações globais
+│   │   ├── interfaces/      # Tipagens e interfaces TypeScript
+│   │   ├── pages/           # Páginas da aplicação
+│   │   ├── store/           # Gerenciamento de estado
+│   │   │   ├── states/
+│   │   │   └── index.ts
+│   │   ├── templates/       # Layouts e templates
+│   │   ├── App.tsx
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   └── vite-env.d.ts
+│   ├── dist/                # Build final (gerado pelo Vite)
+│   ├── node_modules/
+│   └── tests/               # Testes do frontend
 ```
