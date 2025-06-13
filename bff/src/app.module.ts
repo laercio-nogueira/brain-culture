@@ -7,12 +7,14 @@ import { APP_INTERCEPTOR } from '@nestjs/core'
 import { LoggerInterceptor } from '@infrastructure/config/logger-config/logger-config.interceptopr'
 import { WinstonModule } from 'nest-winston'
 import { winstonConfig } from '@infrastructure/config/logger-config/logger-config'
+import { TerminusModule } from '@nestjs/terminus'
 
 import { FarmerController } from '@infrastructure/http/controllers/farmer.controller'
 import { FarmController } from '@infrastructure/http/controllers/farm.controller'
 import { CropController } from '@infrastructure/http/controllers/crop.controller'
 import { HarvestController } from '@infrastructure/http/controllers/harvest.controller'
 import { DashboardController } from '@infrastructure/http/controllers/dashboard.controller'
+import { HealthController } from '@infrastructure/http/controllers/health.controller'
 
 import { FarmerService } from '@domain/services/farmer.service'
 import { FarmService } from '@domain/services/farm.service'
@@ -50,13 +52,14 @@ import { DashboardUseCase } from '@application/usecases/dashboard/dashboard.usec
 
 @Module({
   imports: [
+    WinstonModule.forRoot(winstonConfig),
     TypeOrmModule.forFeature([FarmerEntity]),
     TypeOrmModule.forFeature([FarmEntity]),
     TypeOrmModule.forFeature([CropEntity]),
     TypeOrmModule.forFeature([HarvestEntity]),
     EnvironmentConfigModule,
     TypeOrmConfigModule,
-    WinstonModule.forRoot(winstonConfig),
+    TerminusModule,
   ],
   controllers: [
     FarmerController,
@@ -64,6 +67,7 @@ import { DashboardUseCase } from '@application/usecases/dashboard/dashboard.usec
     CropController,
     HarvestController,
     DashboardController,
+    HealthController,
   ],
   providers: [
     FarmerRepository,
