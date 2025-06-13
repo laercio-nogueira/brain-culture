@@ -36,7 +36,7 @@ export class FarmController {
 
   @Get()
   @ApiCreatedResponse({ type: [FarmResponseDto] })
-  findAll(@Param('page') page: number = 1, @Param('limit') limit: number = 10) {
+  findAll(@Param('page') page?: number, @Param('limit') limit?: number) {
     return this.farmService.findAll(page, limit)
   }
 

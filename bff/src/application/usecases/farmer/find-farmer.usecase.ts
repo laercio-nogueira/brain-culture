@@ -18,21 +18,23 @@ export class FindFarmerUseCase {
   }
 
   async findAll(
-    page: number,
-    limit: number,
+    page?: number,
+    limit?: number,
   ): Promise<{
     data: FindFarmerDto[]
     total: number
     page: number
     limit: number
   }> {
-    const skip = (page - 1) * limit
+    const skip = (page - 1) * (limit ?? 10)
 
     try {
       const [farmers, total] = await this.farmerRepository.findAndCount({
         relations: FarmerRelations,
-        skip,
-        take: limit,
+        ...(page && {
+          skip,
+          take: limit,
+        }),
       })
 
       const data = FindFarmerDto.useMask(farmers)
@@ -40,8 +42,10 @@ export class FindFarmerUseCase {
       return {
         data,
         total,
-        page,
-        limit,
+        ...(page && {
+          page,
+          limit,
+        }),
       }
     } catch (error) {
       throw error

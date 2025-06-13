@@ -21,8 +21,8 @@ export class HarvestService {
   }
 
   async findAll(
-    page: number,
-    limit: number,
+    page?: number,
+    limit?: number,
   ): Promise<{
     data: HarvestProps[]
     total: number

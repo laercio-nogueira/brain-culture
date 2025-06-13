@@ -21,8 +21,8 @@ export class FarmService {
   }
 
   async findAll(
-    page: number,
-    limit: number,
+    page?: number,
+    limit?: number,
   ): Promise<{
     data: FarmProps[]
     total: number

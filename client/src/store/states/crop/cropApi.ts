@@ -12,8 +12,8 @@ export const CropApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1/crop` }),
   tagTypes: ["Crop"],
   endpoints: (builder) => ({
-    getCrops: builder.query<CropsResponse, number>({
-      query: (page: number) => `?page=${page}&limit=${5}`,
+    getCrops: builder.query<CropsResponse, number | undefined>({
+      query: (page?: number) => `?page=${page}&limit=${5}`,
       providesTags: ["Crop"],
     }),
     getCrop: builder.query<Crop, string>({

@@ -12,8 +12,8 @@ export const HarvestApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1/harvest` }),
   tagTypes: ["Harvest"],
   endpoints: (builder) => ({
-    getHarvests: builder.query<HarvestsResponse, number>({
-      query: (page: number) => `?page=${page}&limit=${5}`,
+    getHarvests: builder.query<HarvestsResponse, number | undefined>({
+      query: (page?: number) => (page ? `?page=${page}&limit=${5}` : ""),
       providesTags: ["Harvest"],
     }),
     getHarvest: builder.query<Harvest, string>({

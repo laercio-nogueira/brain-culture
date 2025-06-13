@@ -37,7 +37,7 @@ export class CropController {
   }
   @Get()
   @ApiCreatedResponse({ type: [CropResponseDto] })
-  async findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
+  async findAll(@Query('page') page?, @Query('limit') limit?) {
     return await this.cropService.findAll(page, limit)
   }
 

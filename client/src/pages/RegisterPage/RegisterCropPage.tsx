@@ -9,6 +9,7 @@ import { useGetHarvestsQuery } from "@store/states/harvest/harvestApi";
 import RegisterCropTemplate from "@templates/registerTemplates/RegisterCropTemplate";
 import { FieldTypesList } from "@interfaces/fields.interface";
 import { CropUpdate } from "@interfaces/crop.interface";
+import { HarvestsResponse } from "@interfaces/harvest.interface";
 
 const CultureFormPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +18,7 @@ const CultureFormPage: React.FC = () => {
   const [updateCrop, updateStatus] = useUpdateCropMutation();
 
   const { data: crop } = useGetCropQuery(id!, { skip: !id });
-  const { data: harvests } = useGetHarvestsQuery();
+  const { data: harvests } = useGetHarvestsQuery<HarvestsResponse>(undefined);
 
   const [fieldErrors, setFieldErrors] = useState<any>({});
   const [formData, setFormData] = useState<CropUpdate>({
@@ -55,7 +56,7 @@ const CultureFormPage: React.FC = () => {
       handleSubmit={handleSubmit}
       formData={formData}
       setFormData={setFormData}
-      harvests={harvests}
+      harvests={harvests?.data || []}
       fieldErrors={fieldErrors}
       isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
       error={id ? updateStatus.error : addStatus.error}

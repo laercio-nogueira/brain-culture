@@ -20,8 +20,8 @@ export class CropService {
   }
 
   async findAll(
-    page: number,
-    limit: number,
+    page?: number,
+    limit?: number,
   ): Promise<{
     data: CropProps[]
     total: number

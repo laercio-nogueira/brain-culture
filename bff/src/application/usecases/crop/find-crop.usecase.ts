@@ -17,27 +17,31 @@ export class FindCropUseCase {
   }
 
   async findAll(
-    page: number,
-    limit: number,
+    page?: number,
+    limit?: number,
   ): Promise<{
     data: CropFindProps[]
     total: number
     page: number
     limit: number
   }> {
-    const skip = (page - 1) * limit
+    const skip = (page - 1) * (limit ?? 10)
 
     try {
       const [crops, total] = await this.cropRepository.findAndCount({
-        skip,
-        take: limit,
+        ...(page && {
+          skip,
+          take: limit,
+        }),
       })
 
       return {
         data: crops,
         total,
-        page,
-        limit,
+        ...(page && {
+          page,
+          limit,
+        }),
       }
     } catch (error) {
       throw new Error(error.message)

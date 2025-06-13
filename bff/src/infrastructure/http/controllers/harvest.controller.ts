@@ -37,7 +37,7 @@ export class HarvestController {
 
   @Get()
   @ApiCreatedResponse({ type: [HarvestResponseDto] })
-  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
+  findAll(@Query('page') page?, @Query('limit') limit?) {
     return this.harvestService.findAll(+page, +limit)
   }
 

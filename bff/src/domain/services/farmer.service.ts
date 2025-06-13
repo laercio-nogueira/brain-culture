@@ -20,8 +20,8 @@ export class FarmerService {
   }
 
   async findAll(
-    page: number,
-    limit: number,
+    page?: number,
+    limit?: number,
   ): Promise<{
     data: FarmerProps[]
     total: number

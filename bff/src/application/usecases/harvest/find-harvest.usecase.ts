@@ -26,20 +26,24 @@ export class FindHarvestUseCase {
     page: number
     limit: number
   }> {
-    const skip = (page - 1) * limit
+    const skip = (page - 1) * (limit ?? 10)
 
     try {
       const [harvest, total] = await this.harvestRepository.findAndCount({
         relations: HarvestRelations,
-        skip,
-        take: limit,
+        ...(page && {
+          skip,
+          take: limit,
+        }),
       })
 
       return {
         data: harvest,
         total,
-        page,
-        limit,
+        ...(page && {
+          page,
+          limit,
+        }),
       }
     } catch (error) {
       throw error

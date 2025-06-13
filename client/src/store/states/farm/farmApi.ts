@@ -12,8 +12,8 @@ export const FarmApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1/farm` }),
   tagTypes: ["Farm"],
   endpoints: (builder) => ({
-    getFarms: builder.query<FarmsResponse, number>({
-      query: (page: number) => `?page=${page}&limit=${5}`,
+    getFarms: builder.query<FarmsResponse, number | undefined>({
+      query: (page: number) => (page ? `?page=${page}&limit=${5}` : ``),
       providesTags: ["Farm"],
     }),
     getFarm: builder.query<Farm, string>({

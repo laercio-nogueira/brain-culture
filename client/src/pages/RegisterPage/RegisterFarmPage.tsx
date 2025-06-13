@@ -9,7 +9,7 @@ import { ErrorI } from "@interfaces/error.interface";
 import RegisterFarmTemplate from "@templates/registerTemplates/RegisterFarmTemplate";
 import { FieldTypesList } from "@interfaces/fields.interface";
 import { useParams } from "react-router";
-import { FarmUpdate } from "@interfaces/farm.interface";
+import { FarmsResponse, FarmUpdate } from "@interfaces/farm.interface";
 
 const FarmForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +17,7 @@ const FarmForm: React.FC = () => {
   const [addFarm, addStatus] = useAddFarmMutation<ErrorI>();
   const [updateFarm, updateStatus] = useUpdateFarmMutation();
 
-  const { data: farmers } = useGetFarmersQuery();
+  const { data: farmers } = useGetFarmersQuery<FarmsResponse>(undefined);
   const { data: farm } = useGetFarmQuery(id!, { skip: !id });
 
   const [fieldErrors, setFieldErrors] = useState<any>({});
@@ -89,7 +89,7 @@ const FarmForm: React.FC = () => {
       setFormData={setFormData}
       fieldErrors={fieldErrors}
       maxValueArea={maxValueArea}
-      farmers={farmers}
+      farmers={farmers?.data || []}
       handleSubmit={handleSubmit}
       isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
       error={id ? updateStatus.error : addStatus.error}

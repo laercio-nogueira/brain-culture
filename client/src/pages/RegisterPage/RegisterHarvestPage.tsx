@@ -9,7 +9,7 @@ import {
 import { ErrorI } from "@interfaces/error.interface";
 import { FieldTypesList } from "@interfaces/fields.interface";
 import RegisterHarvestTemplate from "@templates/registerTemplates/RegisterHarvestTemplate";
-import { HarvestUpdate } from "@interfaces/harvest.interface";
+import { HarvestsResponse, HarvestUpdate } from "@interfaces/harvest.interface";
 
 const HarvestForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +17,7 @@ const HarvestForm: React.FC = () => {
   const [addHarvest, addStatus] = useAddHarvestMutation<ErrorI>();
   const [updateHarvest, updateStatus] = useUpdateHarvestMutation<ErrorI>();
 
-  const { data: farmers } = useGetFarmsQuery();
+  const { data: farmers } = useGetFarmsQuery<HarvestsResponse>(undefined);
   const { data: harvest } = useGetHarvestQuery(id!, { skip: !id });
 
   const [fieldErrors, setFieldErrors] = useState<any>({});
@@ -67,7 +67,7 @@ const HarvestForm: React.FC = () => {
       setFormData={setFormData}
       fieldErrors={fieldErrors}
       maxValueYear={maxValueYear}
-      farmers={farmers}
+      farmers={farmers?.data ?? []}
       error={id ? updateStatus.error : addStatus.error}
       isLoading={id ? updateStatus.isLoading : addStatus.isLoading}
       reset={id ? updateStatus.reset : addStatus.reset}
