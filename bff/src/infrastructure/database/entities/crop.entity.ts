@@ -23,7 +23,7 @@ export class CropEntity {
 
   @Column({
     nullable: false,
-    type: 'timestamptz',
+    type: 'datetime',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt?: Date

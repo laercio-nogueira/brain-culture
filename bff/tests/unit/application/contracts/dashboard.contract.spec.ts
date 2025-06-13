@@ -1,4 +1,3 @@
-// dashboard.contract.spec.ts
 import { DashboardResponseDto } from '@application/contracts/dashboard.contract'
 
 describe('Dashboard DTOs', () => {

@@ -18,6 +18,7 @@ module.exports = {
     '/src/app.module.ts',
     '/main.ts',
     '/jest.config.ts',
+    '/tests/e2e',
   ],
   moduleFileExtensions: ['js', 'ts', 'json'],
   moduleNameMapper: {

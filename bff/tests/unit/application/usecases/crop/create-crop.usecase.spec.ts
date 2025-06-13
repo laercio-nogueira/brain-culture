@@ -28,7 +28,6 @@ describe('CreateCropUseCase', () => {
       updatedAt: new Date(),
     }
 
-    // Mocka o método save para resolver com o savedCrop
     jest.spyOn(cropRepository, 'save').mockResolvedValue(savedCrop)
 
     const result = await createCropUseCase.execute(cropDto)

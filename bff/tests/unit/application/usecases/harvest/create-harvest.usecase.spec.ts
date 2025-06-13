@@ -8,9 +8,7 @@ const mockHarvestRepository = () => ({
   save: jest.fn(),
 })
 
-const mockFarmRepository = () => ({
-  // Pode deixar vazio pois não é usado no método execute
-})
+const mockFarmRepository = () => ({})
 
 describe('CreateHarvestUseCase', () => {
   let useCase: CreateHarvestUseCase

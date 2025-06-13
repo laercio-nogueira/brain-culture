@@ -1,4 +1,3 @@
-// area-total-validator.decorator.spec.ts
 import { isValidAreaTotal } from '@application/decorators/area-total-validator.decorator'
 import { validate, validateOrReject } from 'class-validator'
 

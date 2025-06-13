@@ -1,4 +1,3 @@
-// farm.contract.spec.ts
 import {
   FarmResponseDto,
   FarmDeleteResponseDto,

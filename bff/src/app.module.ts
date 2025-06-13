@@ -4,7 +4,7 @@ import { EnvironmentConfigModule } from './infrastructure/config/environment-con
 import { TypeOrmConfigModule } from './infrastructure/config/typeorm-config/typeorm-config.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { APP_INTERCEPTOR } from '@nestjs/core'
-import { LoggerInterceptor } from '@infrastructure/config/logger-config/logger-config.interceptopr'
+import { LoggerInterceptor } from '@infrastructure/config/logger-config/logger-config.interceptor'
 import { WinstonModule } from 'nest-winston'
 import { winstonConfig } from '@infrastructure/config/logger-config/logger-config'
 import { TerminusModule } from '@nestjs/terminus'

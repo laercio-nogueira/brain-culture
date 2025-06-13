@@ -72,4 +72,70 @@ describe('FindHarvestUseCase', () => {
       'DB error',
     )
   })
+
+  describe('findAll', () => {
+    let useCase: FindHarvestUseCase
+    let harvestRepository: Partial<HarvestRepository>
+
+    beforeEach(() => {
+      harvestRepository = {
+        findOne: jest.fn(),
+        findAndCount: jest.fn(),
+      }
+      useCase = new FindHarvestUseCase(harvestRepository as HarvestRepository)
+    })
+
+    it('should include page and limit in options when page is defined', async () => {
+      const mockHarvests = [
+        { name: 'Safra 2020', year: 2020 },
+      ] as FindHarvestDto[]
+      const total = 1
+      const page = 2
+      const limit = 5
+      ;(harvestRepository.findAndCount as jest.Mock).mockResolvedValue([
+        mockHarvests,
+        total,
+      ])
+
+      const result = await useCase.findAll(page, limit)
+
+      expect(harvestRepository.findAndCount).toHaveBeenCalledWith(
+        expect.objectContaining({
+          relations: HarvestRelations,
+          skip: (page - 1) * limit,
+          take: limit,
+        }),
+      )
+      expect(result).toEqual({
+        data: mockHarvests,
+        total,
+        page,
+        limit,
+      })
+    })
+
+    it('should NOT include page and limit in options when page is undefined', async () => {
+      const mockHarvests = [
+        { name: 'Safra 2020', year: 2020 },
+      ] as FindHarvestDto[]
+      const total = 1
+      const page = undefined
+      const limit = undefined
+      ;(harvestRepository.findAndCount as jest.Mock).mockResolvedValue([
+        mockHarvests,
+        total,
+      ])
+
+      const result = await useCase.findAll(page as any, limit as any)
+
+      expect(harvestRepository.findAndCount).toHaveBeenCalledWith(
+        expect.objectContaining({ relations: { crops: true } }),
+      )
+
+      expect(result).toEqual({
+        data: mockHarvests,
+        total,
+      })
+    })
+  })
 })

@@ -1,38 +1,90 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { CropRepository } from '@infrastructure/database/repositories/crop-repository'
+import { DataSource, Repository, SelectQueryBuilder } from 'typeorm'
 import { FarmerRepository } from '@infrastructure/database/repositories/farmer-repository'
-import { DataSource, SelectQueryBuilder } from 'typeorm'
 import { FarmerEntity } from '@infrastructure/database/entities/farmer.entity'
 
 describe('FarmerRepository', () => {
-  let repository: FarmerRepository
   let dataSource: DataSource
-  let queryBuilder: jest.Mocked<SelectQueryBuilder<FarmerEntity>>
+  let repository: FarmerRepository
 
-  beforeEach(async () => {
-    queryBuilder = {
+  let mockQueryBuilder: Partial<SelectQueryBuilder<FarmerEntity>>
+
+  beforeEach(() => {
+    mockQueryBuilder = {
       where: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
       getCount: jest.fn(),
-    } as any
+    }
 
-    const dataSourceMock = {
+    dataSource = {
       createEntityManager: jest.fn(),
-      createQueryBuilder: jest.fn().mockReturnValue(queryBuilder),
-      count: jest.fn(),
-    } as any
+    } as unknown as DataSource
 
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        FarmerRepository,
-        { provide: DataSource, useValue: dataSourceMock },
-      ],
-    }).compile()
+    repository = new FarmerRepository(dataSource)
 
-    repository = module.get<FarmerRepository>(FarmerRepository)
-    dataSource = module.get<DataSource>(DataSource)
+    jest
+      .spyOn(repository, 'createQueryBuilder')
+      .mockReturnValue(mockQueryBuilder as SelectQueryBuilder<FarmerEntity>)
   })
 
-  it('should be defined', () => {
-    expect(repository).toBeDefined()
+  describe('isDocumentExists', () => {
+    it('deve retornar true quando count for maior que zero', async () => {
+      ;(mockQueryBuilder.getCount as jest.Mock).mockResolvedValue(2)
+
+      const result = await repository.isDocumentExists('123456789')
+
+      expect(repository.createQueryBuilder).toHaveBeenCalledWith('farmer')
+      expect(mockQueryBuilder.where).toHaveBeenCalledWith(
+        'farmer.document = :document',
+        { document: '123456789' },
+      )
+      expect(mockQueryBuilder.getCount).toHaveBeenCalled()
+      expect(result).toBe(true)
+    })
+
+    it('deve adicionar filtro excludeId se fornecido', async () => {
+      ;(mockQueryBuilder.getCount as jest.Mock).mockResolvedValue(1)
+
+      const result = await repository.isDocumentExists(
+        '123456789',
+        'id-exclude',
+      )
+
+      expect(mockQueryBuilder.andWhere).toHaveBeenCalledWith(
+        'farmer.id != :excludeId',
+        { excludeId: 'id-exclude' },
+      )
+      expect(result).toBe(true)
+    })
+
+    it('deve retornar false quando count for zero', async () => {
+      ;(mockQueryBuilder.getCount as jest.Mock).mockResolvedValue(0)
+
+      const result = await repository.isDocumentExists('000000000')
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe('isIdExists', () => {
+    it('deve retornar true quando count for maior que zero', async () => {
+      jest.spyOn(repository, 'count').mockResolvedValue(1)
+
+      const result = await repository.isIdExists('some-id')
+
+      expect(repository.count).toHaveBeenCalledWith({
+        where: { id: 'some-id' },
+      })
+      expect(result).toBe(true)
+    })
+
+    it('deve retornar false quando count for zero', async () => {
+      jest.spyOn(repository, 'count').mockResolvedValue(0)
+
+      const result = await repository.isIdExists('other-id')
+
+      expect(result).toBe(false)
+    })
   })
 })

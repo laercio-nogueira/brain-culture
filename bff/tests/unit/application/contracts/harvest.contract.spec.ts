@@ -1,4 +1,3 @@
-// harvest.contract.spec.ts
 import {
   HarvestResponseDto,
   HarvestDeleteResponseDto,

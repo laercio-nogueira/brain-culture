@@ -11,9 +11,9 @@ describe('HarvestEntity', () => {
     expect(harvest.name).toBe('Safra de Milho')
     expect(harvest.year).toBe(2024)
     expect(harvest.farmId).toBe('uuid-farm-1234')
-    expect(harvest.id).toBeUndefined() // gerado pelo banco
-    expect(harvest.createdAt).toBeUndefined() // gerado pelo banco
-    expect(harvest.farm).toBeUndefined() // relação não inicializada
-    expect(harvest.crops).toBeUndefined() // relação opcional
+    expect(harvest.id).toBeUndefined()
+    expect(harvest.createdAt).toBeUndefined()
+    expect(harvest.farm).toBeUndefined()
+    expect(harvest.crops).toBeUndefined()
   })
 })

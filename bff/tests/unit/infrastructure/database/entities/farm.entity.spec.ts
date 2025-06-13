@@ -19,9 +19,9 @@ describe('FarmEntity', () => {
     expect(farm.cultivatedArea).toBe(600)
     expect(farm.vegetatedArea).toBe(400)
     expect(farm.farmerId).toBe('123e4567-e89b-12d3-a456-426614174000')
-    expect(farm.createdAt).toBeUndefined() // criado automaticamente no banco
-    expect(farm.id).toBeUndefined() // gerado no banco
-    expect(farm.harvests).toBeUndefined() // relação não inicializada
-    expect(farm.farmer).toBeUndefined() // relação não inicializada
+    expect(farm.createdAt).toBeUndefined()
+    expect(farm.id).toBeUndefined()
+    expect(farm.harvests).toBeUndefined()
+    expect(farm.farmer).toBeUndefined()
   })
 })

@@ -1,4 +1,3 @@
-// crop.contract.spec.ts
 import {
   CropResponseDto,
   CropDeleteResponseDto,
