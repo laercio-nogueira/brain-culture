@@ -1,0 +1,34 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+      - "4173:4173"
+    environment:
+      DB_HOST: db
+    depends_on:
+      - db
+    networks:
+      - application_network
+
+  db:
+    image: postgres
+    restart: always
+    container_name: db_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: brain
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - application_network
+
+volumes:
+  db_data:
+
+networks:
+  application_network:
+    driver: bridge

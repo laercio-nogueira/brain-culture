@@ -1,0 +1,82 @@
+name: CI - Fullstack App
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: brain
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies (backend)
+        run: |
+          cd bff
+          npm install
+
+      - name: Install dependencies (client)
+        run: |
+          cd client
+          npm install
+
+      - name: Build backend
+        run: |
+          cd bff
+          npm run build
+
+      - name: Build frontend
+        run: |
+          cd client
+          npm run build
+
+      - name: Run unit tests (backend)
+        run: |
+          cd bff
+          npm run test
+
+      - name: Run lint and type check
+        run: |
+          cd bff && npm run lint
+          cd ../client && npm run lint
+
+      - name: Docker Compose - Build production images
+        run: docker-compose -f docker-compose.prod.yml build
+
+      - name: Docker Compose - Run containers
+        run: docker-compose -f docker-compose.prod.yml up -d
+
+      - name: Check backend health
+        run: curl --retry 10 --retry-delay 5 --fail http://localhost:3000/api/health
+
+      - name: Check frontend build output
+        run: curl --retry 10 --retry-delay 5 --fail http://localhost:4173
+
+      - name: Shutdown containers
+        if: always()
+        run: docker-compose -f docker-compose.prod.yml down
