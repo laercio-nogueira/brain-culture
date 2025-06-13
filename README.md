@@ -5,7 +5,8 @@ API RESTful para gerenciar o cadastro de produtores rurais.
 ## **Tópicos**
 1. Tecnologias e Libs.
 2. Instalação
-3. Estrutura do Projeto.
+3. Instalação
+4. Estrutura do Projeto.
 
 ---
 
@@ -108,9 +109,25 @@ API RESTful para gerenciar o cadastro de produtores rurais.
 7. A aplicação estará disponível em:
   - http://localhost:5173
 
+## **3. Testes**
+
+- Backend (Teste Unitario) - (Execute na bff projeto)
+  ```bash
+    npm run test
+  ```
+
+- Backend (Teste E2E) - (Execute na bff projeto)
+  ```bash
+    npm run test:e2e
+  ```
+- Frontend - (Execute no client projeto)
+  ```bash
+    npm run test
+  ```
+
 ---
 
-## **3. Estrutura do Projeto**
+## **4. Estrutura do Projeto**
 ```ruby
 brain-culture/
 ├── bff/                     # Backend (NestJS)
