@@ -17,11 +17,30 @@ export class FindHarvestUseCase {
     }
   }
 
-  async findAll(): Promise<FindHarvestDto[]> {
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{
+    data: FindHarvestDto[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    const skip = (page - 1) * limit
+
     try {
-      return await this.harvestRepository.find({
+      const [harvest, total] = await this.harvestRepository.findAndCount({
         relations: HarvestRelations,
+        skip,
+        take: limit,
       })
+
+      return {
+        data: harvest,
+        total,
+        page,
+        limit,
+      }
     } catch (error) {
       throw error
     }

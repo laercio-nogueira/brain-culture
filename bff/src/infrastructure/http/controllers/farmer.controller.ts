@@ -9,6 +9,7 @@ import {
   Inject,
   Logger,
   LoggerService,
+  Query,
 } from '@nestjs/common'
 import { FarmerService } from '@domain/services/farmer.service'
 import { CreateFarmerDto } from '@application/dto/farmer/create-farmer.dto'
@@ -37,8 +38,8 @@ export class FarmerController {
 
   @Get()
   @ApiCreatedResponse({ type: [FarmerResponseDto] })
-  findAll() {
-    return this.farmerService.findAll()
+  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
+    return this.farmerService.findAll(+page, +limit)
   }
 
   @Get(':id')

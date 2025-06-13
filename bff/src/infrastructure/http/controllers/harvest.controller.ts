@@ -9,6 +9,7 @@ import {
   Inject,
   Logger,
   LoggerService,
+  Query,
 } from '@nestjs/common'
 import { HarvestService } from '@domain/services/harvest.service'
 import { CreateHarvestDto } from '@application/dto/harvest/create-harvest.dto'
@@ -36,8 +37,8 @@ export class HarvestController {
 
   @Get()
   @ApiCreatedResponse({ type: [HarvestResponseDto] })
-  findAll() {
-    return this.harvestService.findAll()
+  findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
+    return this.harvestService.findAll(+page, +limit)
   }
 
   @Get(':id')

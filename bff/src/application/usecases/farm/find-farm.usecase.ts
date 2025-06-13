@@ -2,6 +2,7 @@ import { FarmProps } from '@domain/entities/farm.entity'
 import { FarmRepository } from '@infrastructure/database/repositories/farm-repository'
 import { Injectable } from '@nestjs/common'
 import { FarmRelations } from '@infrastructure/config/relations-config/farm-relations-config'
+import { FindFarmDto } from '@application/dto/farm/find-farm.dto'
 
 @Injectable()
 export class FindFarmUseCase {
@@ -17,11 +18,30 @@ export class FindFarmUseCase {
     }
   }
 
-  async findAll(): Promise<FarmProps[]> {
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{
+    data: FarmProps[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    const skip = (page - 1) * limit
+
     try {
-      return await this.farmRepository.find({
+      const [farms, total] = await this.farmRepository.findAndCount({
         relations: FarmRelations,
+        skip,
+        take: limit,
       })
+
+      return {
+        data: farms,
+        total,
+        page,
+        limit,
+      }
     } catch (error) {
       throw new Error('Error finding farm')
     }

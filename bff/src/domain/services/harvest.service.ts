@@ -5,6 +5,7 @@ import { CreateHarvestUseCase } from '@application/usecases/harvest/create-harve
 import { FindHarvestUseCase } from '@application/usecases/harvest/find-harvest.usecase'
 import { DeleteHarvestUseCase } from '@application/usecases/harvest/delete-harvest.usecase'
 import { UpdateHarvestUseCase } from '@application/usecases/harvest/update-harvest.usecase'
+import { HarvestProps } from '@domain/entities/harvest.entity'
 
 @Injectable()
 export class HarvestService {
@@ -19,8 +20,16 @@ export class HarvestService {
     return await this.createHarvestUseCase.execute(harvest)
   }
 
-  async findAll() {
-    return await this.findHarvestUseCase.findAll()
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{
+    data: HarvestProps[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    return await this.findHarvestUseCase.findAll(page, limit)
   }
 
   async findOne(id: string) {

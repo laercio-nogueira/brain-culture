@@ -5,7 +5,7 @@ import { CreateCropUseCase } from '@application/usecases/crop/create-crop.usecas
 import { FindCropUseCase } from '@application/usecases/crop/find-crop.usecase'
 import { DeleteCropUseCase } from '@application/usecases/crop/delete-crop.usecase'
 import { UpdateCropUseCase } from '@application/usecases/crop/update-crop.usecase'
-import { CropFindProps } from '@domain/entities/crop.entity'
+import { CropFindProps, CropProps } from '@domain/entities/crop.entity'
 
 @Injectable()
 export class CropService {
@@ -19,8 +19,16 @@ export class CropService {
     return await this.createCropUseCase.execute(crop)
   }
 
-  async findAll(): Promise<CropFindProps[]> {
-    return await this.findCropCase.findAll()
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{
+    data: CropProps[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    return await this.findCropCase.findAll(page, limit)
   }
 
   async findOne(id: string): Promise<CropFindProps> {

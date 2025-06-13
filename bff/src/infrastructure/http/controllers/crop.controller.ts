@@ -9,6 +9,7 @@ import {
   Inject,
   Logger,
   LoggerService,
+  Query,
 } from '@nestjs/common'
 import { CropService } from '@domain/services/crop.service'
 import { CreateCropDto } from '@application/dto/crop/create-crop.dto'
@@ -36,8 +37,8 @@ export class CropController {
   }
   @Get()
   @ApiCreatedResponse({ type: [CropResponseDto] })
-  async findAll(): Promise<CropFindProps[]> {
-    return await this.cropService.findAll()
+  async findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
+    return await this.cropService.findAll(page, limit)
   }
 
   @Get(':id')

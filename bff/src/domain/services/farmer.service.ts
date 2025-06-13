@@ -5,6 +5,7 @@ import { CreateFarmerUseCase } from '@application/usecases/farmer/create-farmer.
 import { FindFarmerUseCase } from '@application/usecases/farmer/find-farmer.usecase'
 import { DeleteFarmerUseCase } from '@application/usecases/farmer/delete-farmer.usecase'
 import { UpdateFarmerUseCase } from '@application/usecases/farmer/update-farmer.usecase'
+import { FarmerProps } from '@domain/entities/farmer.entity'
 
 @Injectable()
 export class FarmerService {
@@ -18,8 +19,16 @@ export class FarmerService {
     return await this.createFarmerUseCase.execute(farmer)
   }
 
-  async findAll() {
-    return await this.findFarmerUseCase.findAll()
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{
+    data: FarmerProps[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    return await this.findFarmerUseCase.findAll(page, limit)
   }
 
   async findOne(id: string) {

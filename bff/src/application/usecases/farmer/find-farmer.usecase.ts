@@ -17,13 +17,32 @@ export class FindFarmerUseCase {
     }
   }
 
-  async findAll(): Promise<FindFarmerDto[]> {
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{
+    data: FindFarmerDto[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    const skip = (page - 1) * limit
+
     try {
-      const result = await this.farmerRepository.find({
+      const [farmers, total] = await this.farmerRepository.findAndCount({
         relations: FarmerRelations,
+        skip,
+        take: limit,
       })
 
-      return FindFarmerDto.useMask(result)
+      const data = FindFarmerDto.useMask(farmers)
+
+      return {
+        data,
+        total,
+        page,
+        limit,
+      }
     } catch (error) {
       throw error
     }
