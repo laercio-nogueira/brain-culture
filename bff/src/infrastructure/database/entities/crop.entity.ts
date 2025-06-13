@@ -7,6 +7,8 @@ import {
 } from 'typeorm'
 import { HarvestEntity } from './harvest.entity'
 
+const isTest = process.env.NODE_ENV === 'test'
+
 @Entity('crop')
 export class CropEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -23,7 +25,7 @@ export class CropEntity {
 
   @Column({
     nullable: false,
-    type: 'datetime',
+    type: isTest ? 'datetime' : 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt?: Date

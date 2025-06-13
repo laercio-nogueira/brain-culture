@@ -8,6 +8,8 @@ import {
 import { FarmerEntity } from './farmer.entity'
 import { HarvestEntity } from './harvest.entity'
 
+const isTest = process.env.NODE_ENV === 'test'
+
 @Entity('farm')
 export class FarmEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -44,7 +46,7 @@ export class FarmEntity {
 
   @Column({
     nullable: false,
-    type: 'datetime',
+    type: isTest ? 'datetime' : 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt?: Date

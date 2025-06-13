@@ -7,6 +7,8 @@ import {
 } from 'typeorm'
 import { FarmEntity } from './farm.entity'
 
+const isTest = process.env.NODE_ENV === 'test'
+
 @Entity('farmer')
 export class FarmerEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -26,7 +28,7 @@ export class FarmerEntity {
 
   @Column({
     nullable: false,
-    type: 'datetime',
+    type: isTest ? 'datetime' : 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt?: Date
