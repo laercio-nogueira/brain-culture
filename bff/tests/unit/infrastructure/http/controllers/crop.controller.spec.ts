@@ -3,6 +3,7 @@ import { CropController } from '@infrastructure/http/controllers/crop.controller
 import { CropService } from '@domain/services/crop.service'
 import { CreateCropDto } from '@application/dto/crop/create-crop.dto'
 import { UpdateCropDto } from '@application/dto/crop/update-crop.dto'
+import { Logger } from '@nestjs/common'
 
 describe('CropController', () => {
   let controller: CropController
@@ -19,7 +20,19 @@ describe('CropController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CropController],
-      providers: [{ provide: CropService, useValue: mockCropService }],
+      providers: [
+        { provide: CropService, useValue: mockCropService },
+        {
+          provide: Logger,
+          useValue: {
+            log: jest.fn(),
+            error: jest.fn(),
+            warn: jest.fn(),
+            debug: jest.fn(),
+            verbose: jest.fn(),
+          },
+        },
+      ],
     }).compile()
 
     controller = module.get<CropController>(CropController)

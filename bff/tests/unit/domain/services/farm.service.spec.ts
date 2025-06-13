@@ -55,17 +55,27 @@ describe('FarmService', () => {
   })
 
   it('should find all farms', async () => {
-    const farms: FarmProps[] = [
-      {
-        id: '1',
-        name: 'A',
-        city: 'X',
-        state: 'SP',
-        totalArea: 1,
-        cultivatedArea: 1,
-        vegetatedArea: 0,
-      },
-    ]
+    const farms: {
+      data: FarmProps[]
+      total: number
+      page: number
+      limit: number
+    } = {
+      data: [
+        {
+          id: '1',
+          name: 'A',
+          city: 'X',
+          state: 'SP',
+          totalArea: 1,
+          cultivatedArea: 1,
+          vegetatedArea: 0,
+        },
+      ],
+      total: 1,
+      page: 1,
+      limit: 10,
+    }
     jest.spyOn(findFarmUseCase, 'findAll').mockResolvedValue(farms)
 
     const result = await farmService.findAll()

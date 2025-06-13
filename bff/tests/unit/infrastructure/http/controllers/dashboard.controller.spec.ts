@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { DashboardController } from '@infrastructure/http/controllers/dashboard.controller'
 import { DashboardService } from '@domain/services/dashboard.service'
 import { DashboardProps } from '@domain/entities/dashboard.entity'
+import { Logger } from '@nestjs/common'
 
 describe('DashboardController', () => {
   let controller: DashboardController
@@ -16,6 +17,16 @@ describe('DashboardController', () => {
       controllers: [DashboardController],
       providers: [
         { provide: DashboardService, useValue: mockDashboardService },
+        {
+          provide: Logger,
+          useValue: {
+            log: jest.fn(),
+            error: jest.fn(),
+            warn: jest.fn(),
+            debug: jest.fn(),
+            verbose: jest.fn(),
+          },
+        },
       ],
     }).compile()
 

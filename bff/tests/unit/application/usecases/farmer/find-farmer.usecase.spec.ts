@@ -4,6 +4,7 @@ import { FarmerRepository } from '@infrastructure/database/repositories/farmer-r
 const mockRepository = () => ({
   findOne: jest.fn(),
   find: jest.fn(),
+  findAndCount: jest.fn(),
 })
 
 describe('FindFarmerUseCase', () => {
@@ -42,27 +43,30 @@ describe('FindFarmerUseCase', () => {
   describe('findAll', () => {
     it('should return all farmers with masked documents', async () => {
       const mockFarmers = [
-        {
-          id: '1',
-          name: 'João',
-          document: '12345678901',
-          documentType: 'PF',
-          farms: [],
-        },
-        {
-          id: '2',
-          name: 'Empresa X',
-          document: '12345678000199',
-          documentType: 'PJ',
-          farms: [],
-        },
+        [
+          {
+            id: '1',
+            name: 'João',
+            document: '12345678901',
+            documentType: 'PF',
+            farms: [],
+          },
+          {
+            id: '2',
+            name: 'Empresa X',
+            document: '12345678000199',
+            documentType: 'PJ',
+            farms: [],
+          },
+        ],
+        10,
       ]
 
-      repository.find.mockResolvedValue(mockFarmers)
+      repository.findAndCount.mockResolvedValue(mockFarmers as any)
 
-      const result = await useCase.findAll()
+      const result = await useCase.findAll(1, 10)
 
-      expect(repository.find).toHaveBeenCalledWith({
+      expect(repository.findAndCount).toHaveBeenCalledWith({
         relations: {
           farms: {
             harvests: {
@@ -70,28 +74,35 @@ describe('FindFarmerUseCase', () => {
             },
           },
         },
+        skip: 0,
+        take: 10,
       })
 
-      expect(result).toEqual([
-        {
-          id: '1',
-          name: 'João',
-          document: '123.456.789-01',
-          documentType: 'PF',
-          farms: [],
-        },
-        {
-          id: '2',
-          name: 'Empresa X',
-          document: '12.345.678/0001-99',
-          documentType: 'PJ',
-          farms: [],
-        },
-      ])
+      expect(result).toEqual({
+        data: [
+          {
+            document: '123.456.789-01',
+            documentType: 'PF',
+            farms: [],
+            id: '1',
+            name: 'João',
+          },
+          {
+            document: '12.345.678/0001-99',
+            documentType: 'PJ',
+            farms: [],
+            id: '2',
+            name: 'Empresa X',
+          },
+        ],
+        limit: 10,
+        page: 1,
+        total: 10,
+      })
     })
 
     it('should throw if repository throws', async () => {
-      repository.find.mockRejectedValue(new Error('Query failed'))
+      repository.findAndCount.mockRejectedValue(new Error('Query failed'))
 
       await expect(useCase.findAll()).rejects.toThrow('Query failed')
     })

@@ -5,6 +5,7 @@ import { FarmProps } from '@domain/entities/farm.entity'
 const mockFarmRepository = () => ({
   findOne: jest.fn(),
   find: jest.fn(),
+  findAndCount: jest.fn(),
 })
 
 describe('FindFarmUseCase', () => {
@@ -44,23 +45,36 @@ describe('FindFarmUseCase', () => {
 
   describe('findAll', () => {
     it('should return all farms', async () => {
-      const mockFarms: FarmProps[] = [
-        { id: '1', name: 'Fazenda A' },
-        { id: '2', name: 'Fazenda B' },
-      ] as FarmProps[]
+      const mockFarms = [
+        [
+          { id: '1', name: 'Fazenda A' },
+          { id: '2', name: 'Fazenda B' },
+        ],
+        10,
+      ]
 
-      repository.find.mockResolvedValue(mockFarms as any)
+      repository.findAndCount.mockResolvedValue(mockFarms as any)
 
-      const result = await useCase.findAll()
+      const result = await useCase.findAll(1, 10)
 
-      expect(repository.find).toHaveBeenCalledWith({
+      expect(repository.findAndCount).toHaveBeenCalledWith({
         relations: {
           harvests: {
             crops: true,
           },
         },
+        skip: 0,
+        take: 10,
       })
-      expect(result).toEqual(mockFarms)
+      expect(result).toEqual({
+        data: [
+          { id: '1', name: 'Fazenda A' },
+          { id: '2', name: 'Fazenda B' },
+        ],
+        limit: 10,
+        page: 1,
+        total: 10,
+      })
     })
 
     it('should throw a specific error if repository throws', async () => {

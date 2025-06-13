@@ -6,6 +6,7 @@ import {
   FarmDeleteResponseDto,
   FarmResponseDto,
 } from '@application/contracts/farm.contract'
+import { Logger } from '@nestjs/common'
 
 describe('FarmController', () => {
   let controller: FarmController
@@ -22,7 +23,19 @@ describe('FarmController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [FarmController],
-      providers: [{ provide: FarmService, useValue: mockFarmService }],
+      providers: [
+        { provide: FarmService, useValue: mockFarmService },
+        {
+          provide: Logger,
+          useValue: {
+            log: jest.fn(),
+            error: jest.fn(),
+            warn: jest.fn(),
+            debug: jest.fn(),
+            verbose: jest.fn(),
+          },
+        },
+      ],
     }).compile()
 
     controller = module.get<FarmController>(FarmController)

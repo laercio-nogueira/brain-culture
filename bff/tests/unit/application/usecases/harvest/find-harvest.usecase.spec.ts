@@ -6,6 +6,7 @@ import { HarvestRelations } from '@infrastructure/config/relations-config/harves
 const mockHarvestRepository = () => ({
   findOne: jest.fn(),
   find: jest.fn(),
+  findAndCount: jest.fn(),
 })
 
 describe('FindHarvestUseCase', () => {
@@ -34,14 +35,26 @@ describe('FindHarvestUseCase', () => {
   })
 
   it('should return all harvests with relations', async () => {
-    repository.find.mockResolvedValue([mockHarvest as any])
+    const mock = [
+      [
+        {
+          name: 'Safra Verão',
+          year: 2024,
+        },
+      ],
+      10,
+    ]
+    repository.findAndCount.mockResolvedValue(mock as any)
 
-    const result = await useCase.findAll()
+    const result = await useCase.findAll(undefined, 10)
 
-    expect(repository.find).toHaveBeenCalledWith({
+    expect(repository.findAndCount).toHaveBeenCalledWith({
       relations: HarvestRelations,
     })
-    expect(result).toEqual([mockHarvest])
+    expect(result).toEqual({
+      data: [{ name: 'Safra Verão', year: 2024 }],
+      total: 10,
+    })
   })
 
   it('should throw if findOne throws', async () => {
@@ -53,8 +66,10 @@ describe('FindHarvestUseCase', () => {
 
   it('should throw if findAll throws', async () => {
     const error = new Error('DB error')
-    repository.find.mockRejectedValue(error)
+    repository.findAndCount.mockRejectedValue(error)
 
-    await expect(useCase.findAll()).rejects.toThrow('DB error')
+    await expect(useCase.findAll(undefined, undefined)).rejects.toThrow(
+      'DB error',
+    )
   })
 })

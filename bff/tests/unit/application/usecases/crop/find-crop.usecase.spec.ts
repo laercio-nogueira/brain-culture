@@ -9,6 +9,7 @@ describe('FindCropUseCase', () => {
     cropRepository = {
       findOne: jest.fn(),
       find: jest.fn(),
+      findAndCount: jest.fn(),
     } as unknown as CropRepository
 
     findCropUseCase = new FindCropUseCase(cropRepository)
@@ -42,22 +43,26 @@ describe('FindCropUseCase', () => {
 
   describe('findAll', () => {
     it('should return a list of crops', async () => {
-      const mockCrops: any = [
-        { id: 'uuid-1', name: 'Wheat' },
-        { id: 'uuid-2', name: 'Corn' },
-      ]
+      const mockCrops = [[{ id: 'uuid-1', name: 'Milho' }], 10]
 
-      jest.spyOn(cropRepository, 'find').mockResolvedValue(mockCrops)
+      jest
+        .spyOn(cropRepository, 'findAndCount')
+        .mockResolvedValue(mockCrops as any)
 
-      const result = await findCropUseCase.findAll()
+      const result = await findCropUseCase.findAll(1, 10)
 
-      expect(cropRepository.find).toHaveBeenCalled()
-      expect(result).toEqual(mockCrops)
+      expect(cropRepository.findAndCount).toHaveBeenCalled()
+      expect(result).toEqual({
+        data: [{ id: 'uuid-1', name: 'Milho' }],
+        limit: 10,
+        page: 1,
+        total: 10,
+      })
     })
 
     it('should throw an error if repository.find throws', async () => {
       jest
-        .spyOn(cropRepository, 'find')
+        .spyOn(cropRepository, 'findAndCount')
         .mockRejectedValue(new Error('DB error'))
 
       await expect(findCropUseCase.findAll()).rejects.toThrow('DB error')

@@ -55,7 +55,12 @@ describe('HarvestService', () => {
   })
 
   it('should find all harvests', async () => {
-    const result = [{ id: '1', name: 'Colheita 1', year: 2024 }]
+    const result = {
+      data: [{ id: '1', name: 'Colheita 1', year: 2024 }],
+      total: 1,
+      page: 1,
+      limit: 10,
+    }
     findHarvestUseCase.findAll.mockResolvedValue(result)
 
     expect(await service.findAll()).toEqual(result)

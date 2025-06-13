@@ -82,10 +82,20 @@ describe('FarmerService', () => {
   })
 
   it('should find all farmers', async () => {
-    const farmers: FarmerProps[] = [
-      { id: '1', document: '123', documentType: 'CPF', name: 'A' },
-      { id: '2', document: '456', documentType: 'CPF', name: 'B' },
-    ]
+    const farmers: {
+      data: FarmerProps[]
+      total: number
+      page: number
+      limit: number
+    } = {
+      data: [
+        { id: '1', document: '123', documentType: 'CPF', name: 'A' },
+        { id: '2', document: '456', documentType: 'CPF', name: 'B' },
+      ],
+      total: 2,
+      page: 1,
+      limit: 10,
+    }
     findFarmerUseCase.findAll.mockResolvedValue(farmers)
 
     const result = await service.findAll()

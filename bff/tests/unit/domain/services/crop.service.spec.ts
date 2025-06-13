@@ -51,7 +51,12 @@ describe('CropService', () => {
   })
 
   it('should find all crops', async () => {
-    const result: CropFindProps[] = [{ id: '1', name: 'Soja' }]
+    const result: {
+      data: CropFindProps[]
+      total: number
+      page: number
+      limit: number
+    } = { data: [{ id: '1', name: 'Soja' }], total: 1, page: 1, limit: 10 }
     jest.spyOn(findCropUseCase, 'findAll').mockResolvedValue(result)
 
     expect(await cropService.findAll()).toBe(result)

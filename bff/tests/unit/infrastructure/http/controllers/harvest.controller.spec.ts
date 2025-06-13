@@ -6,6 +6,7 @@ import {
   HarvestDeleteResponseDto,
   HarvestResponseDto,
 } from '@application/contracts/harvest.contract'
+import { Logger } from '@nestjs/common'
 
 describe('HarvestController', () => {
   let controller: HarvestController
@@ -22,7 +23,19 @@ describe('HarvestController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [HarvestController],
-      providers: [{ provide: HarvestService, useValue: mockHarvestService }],
+      providers: [
+        { provide: HarvestService, useValue: mockHarvestService },
+        {
+          provide: Logger,
+          useValue: {
+            log: jest.fn(),
+            error: jest.fn(),
+            warn: jest.fn(),
+            debug: jest.fn(),
+            verbose: jest.fn(),
+          },
+        },
+      ],
     }).compile()
 
     controller = module.get<HarvestController>(HarvestController)
