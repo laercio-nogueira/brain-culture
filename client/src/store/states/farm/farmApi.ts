@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Farm, FarmCreate, FarmUpdate } from "@interfaces/farm.interface";
+import {
+  Farm,
+  FarmCreate,
+  FarmsResponse,
+  FarmUpdate,
+} from "@interfaces/farm.interface";
 import { BASE_URL } from "@config/env.config";
 
 export const FarmApi = createApi({
@@ -7,8 +12,8 @@ export const FarmApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1/farm` }),
   tagTypes: ["Farm"],
   endpoints: (builder) => ({
-    getFarms: builder.query<Farm[], void>({
-      query: () => "",
+    getFarms: builder.query<FarmsResponse, number>({
+      query: (page: number) => `?page=${page}&limit=${5}`,
       providesTags: ["Farm"],
     }),
     getFarm: builder.query<Farm, string>({

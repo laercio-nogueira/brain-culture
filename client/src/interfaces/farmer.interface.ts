@@ -22,3 +22,12 @@ export interface FarmerCreate {
 export interface FarmerUpdate extends FarmerCreate {
   id?: string;
 }
+
+export interface FarmersResponse {
+  data: {
+    data: Farmer[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}

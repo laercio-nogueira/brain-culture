@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   Harvest,
   HarvestCreate,
+  HarvestsResponse,
   HarvestUpdate,
 } from "@interfaces/harvest.interface";
 import { BASE_URL } from "@config/env.config";
@@ -11,8 +12,8 @@ export const HarvestApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1/harvest` }),
   tagTypes: ["Harvest"],
   endpoints: (builder) => ({
-    getHarvests: builder.query<Harvest[], void>({
-      query: () => "",
+    getHarvests: builder.query<HarvestsResponse, number>({
+      query: (page: number) => `?page=${page}&limit=${5}`,
       providesTags: ["Harvest"],
     }),
     getHarvest: builder.query<Harvest, string>({

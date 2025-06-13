@@ -17,3 +17,12 @@ export interface CropCreate {
 export interface CropUpdate extends CropCreate {
   id?: string;
 }
+
+export interface CropsResponse {
+  data: {
+    data: Crop[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}

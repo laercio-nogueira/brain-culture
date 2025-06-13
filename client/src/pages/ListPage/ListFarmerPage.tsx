@@ -6,10 +6,14 @@ import {
 } from "@store/states/farmer/farmerApi";
 import { ErrorI } from "@interfaces/error.interface";
 import Popup from "@components/Popup";
+import { FarmersResponse } from "@interfaces/farmer.interface";
+import { Paginate } from "@components/Paginate";
+import { useState } from "react";
 
 const FarmerList = () => {
   const navigate = useNavigate();
-  const { data: farmer } = useGetFarmersQuery();
+  const [page, setPage] = useState<number>(1);
+  const { data } = useGetFarmersQuery<FarmersResponse>(page);
   const [deleteFarmer, { isError, error, reset }] =
     useDeleteFarmerMutation<ErrorI>();
 
@@ -40,7 +44,7 @@ const FarmerList = () => {
             },
           },
         }}
-        data={farmer || []}
+        data={data?.data || []}
         onEdit={(id: string) => navigate(`/farmer/edit/${id}`)}
         onRegister={() => navigate("/farmer/register")}
         onDelete={(id: string) => deleteFarmer(id)}
@@ -48,6 +52,12 @@ const FarmerList = () => {
       {isError && (
         <Popup text={error?.data.message} onClose={reset} type="error" />
       )}
+
+      <Paginate
+        currentPage={data?.page | 0}
+        totalPages={Math.ceil(data?.total / data?.limit) || 0}
+        onPageChange={(page: number) => setPage(page)}
+      />
     </>
   );
 };

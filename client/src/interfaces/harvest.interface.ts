@@ -22,3 +22,12 @@ export interface HarvestCreate {
 export interface HarvestUpdate extends HarvestCreate {
   id?: string;
 }
+
+export interface HarvestsResponse {
+  data: {
+    data: Harvest[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}

@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Crop, CropCreate, CropUpdate } from "@interfaces/crop.interface";
+import {
+  Crop,
+  CropCreate,
+  CropsResponse,
+  CropUpdate,
+} from "@interfaces/crop.interface";
 import { BASE_URL } from "@config/env.config";
 
 export const CropApi = createApi({
@@ -7,8 +12,8 @@ export const CropApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BASE_URL}/api/v1/crop` }),
   tagTypes: ["Crop"],
   endpoints: (builder) => ({
-    getCrops: builder.query<Crop[], void>({
-      query: () => "",
+    getCrops: builder.query<CropsResponse, number>({
+      query: (page: number) => `?page=${page}&limit=${5}`,
       providesTags: ["Crop"],
     }),
     getCrop: builder.query<Crop, string>({

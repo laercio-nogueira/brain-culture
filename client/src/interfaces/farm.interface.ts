@@ -30,3 +30,12 @@ export interface FarmCreate {
 export interface FarmUpdate extends FarmCreate {
   id?: string;
 }
+
+export interface FarmsResponse {
+  data: {
+    data: Farm[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}
