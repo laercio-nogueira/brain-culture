@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  Inject,
+  Logger,
+  LoggerService,
+} from '@nestjs/common'
 import { CropService } from '@domain/services/crop.service'
 import { CreateCropDto } from '@application/dto/crop/create-crop.dto'
 import { UpdateCropDto } from '@application/dto/crop/update-crop.dto'
@@ -13,7 +24,10 @@ import {
 @ApiTags('Cultivo')
 @Controller('crop')
 export class CropController {
-  constructor(private readonly cropService: CropService) {}
+  constructor(
+    private readonly cropService: CropService,
+    @Inject(Logger) private readonly logger: LoggerService,
+  ) {}
 
   @Post()
   @ApiBody({ type: CropCreateDto })

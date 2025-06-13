@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  Inject,
+  Logger,
+  LoggerService,
+} from '@nestjs/common'
 import { HarvestService } from '@domain/services/harvest.service'
 import { CreateHarvestDto } from '@application/dto/harvest/create-harvest.dto'
 import { UpdateHarvestDto } from '@application/dto/harvest/update-harvest.dto'
@@ -12,7 +23,10 @@ import {
 @ApiTags('Safra')
 @Controller('harvest')
 export class HarvestController {
-  constructor(private readonly harvestService: HarvestService) {}
+  constructor(
+    private readonly harvestService: HarvestService,
+    @Inject(Logger) private readonly logger: LoggerService,
+  ) {}
 
   @Post()
   @ApiBody({ type: HarvestCreateDto })

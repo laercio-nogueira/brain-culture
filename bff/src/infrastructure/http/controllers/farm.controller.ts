@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  Inject,
+  Logger,
+  LoggerService,
+} from '@nestjs/common'
 import { FarmService } from '@domain/services/farm.service'
 import { CreateFarmDto } from '@application/dto/farm/create-farm.dto'
 import { UpdateFarmDto } from '@application/dto/farm/update-farm.dto'
@@ -12,7 +23,10 @@ import {
 @ApiTags('Fazenda')
 @Controller('farm')
 export class FarmController {
-  constructor(private readonly farmService: FarmService) {}
+  constructor(
+    private readonly farmService: FarmService,
+    @Inject(Logger) private readonly logger: LoggerService,
+  ) {}
 
   @Post()
   @ApiBody({ type: FarmCreateDto })

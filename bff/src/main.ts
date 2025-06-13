@@ -8,9 +8,10 @@ import {
 } from '@nestjs/common'
 import { setupSwagger } from '@infrastructure/http/swagger/setup.swagger'
 import helmet from 'helmet'
+import { logger } from '@infrastructure/config/logger-config/logger-config'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, { logger })
   app.use(helmet())
   app.setGlobalPrefix('api')
   app.enableVersioning({

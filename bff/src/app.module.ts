@@ -1,8 +1,12 @@
-import { Module, OnModuleInit } from '@nestjs/common'
+import { Logger, Module, OnModuleInit } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { EnvironmentConfigModule } from './infrastructure/config/environment-config/environment-config.module'
 import { TypeOrmConfigModule } from './infrastructure/config/typeorm-config/typeorm-config.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { APP_INTERCEPTOR } from '@nestjs/core'
+import { LoggerInterceptor } from '@infrastructure/config/logger-config/logger-config.interceptopr'
+import { WinstonModule } from 'nest-winston'
+import { winstonConfig } from '@infrastructure/config/logger-config/logger-config'
 
 import { FarmerController } from '@infrastructure/http/controllers/farmer.controller'
 import { FarmController } from '@infrastructure/http/controllers/farm.controller'
@@ -52,6 +56,7 @@ import { DashboardUseCase } from '@application/usecases/dashboard/dashboard.usec
     TypeOrmModule.forFeature([HarvestEntity]),
     EnvironmentConfigModule,
     TypeOrmConfigModule,
+    WinstonModule.forRoot(winstonConfig),
   ],
   controllers: [
     FarmerController,
@@ -88,6 +93,11 @@ import { DashboardUseCase } from '@application/usecases/dashboard/dashboard.usec
     DeleteHarvestUseCase,
     UpdateHarvestUseCase,
     DashboardUseCase,
+    Logger,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggerInterceptor,
+    },
   ],
 })
 export class AppModule implements OnModuleInit {
