@@ -7,7 +7,7 @@ import { StatCard, Stats } from "@components/Stat";
 
 const Container = styled.div`
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 0 auto;
   padding: 2rem;
   font-family: "Segoe UI", sans-serif;
 `;
